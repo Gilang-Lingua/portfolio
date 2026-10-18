@@ -10,9 +10,9 @@ import type { Project } from '../types'
 import { ProjectModal } from './ProjectModal'
 import { GithubIcon } from './Icons'
 
-const projectCategories = ['Semua', 'Full Stack', 'Frontend']
+const projectCategories = ['Semua', 'Cyber Security', 'Data & AI', 'Web Dev']
 
-export const Projects: React.FC = () => {
+export function Projects() {
   const [selectedCategory, setSelectedCategory] = useState('Semua')
   const [activeModalProject, setActiveModalProject] = useState<Project | null>(null)
 

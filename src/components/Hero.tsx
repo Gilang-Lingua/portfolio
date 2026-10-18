@@ -49,11 +49,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCV }) => {
                 <span>Halo, Saya {personalInfo.name} 👋</span>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                Membangun Pengalaman Web{' '}
+                Cyber Security,{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400">
-                  Modern, Cepat,
+                  Data Science,
                 </span>{' '}
-                & Interaktif.
+                & AI Solutions.
               </h1>
             </div>
 
@@ -182,21 +182,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCV }) => {
 
                 {/* Interactive Code Snippet Mock */}
                 <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-white/10 font-mono text-xs space-y-1.5 text-zinc-300">
-                  <div className="text-zinc-400">// Karakteristik & Fokus</div>
+                  <div className="text-zinc-400">// Karakteristik & Peminatan</div>
                   <div className="flex gap-2">
                     <span className="text-fuchsia-400">const</span>
-                    <span className="text-cyan-300">developer</span>
+                    <span className="text-cyan-300">student</span>
                     <span className="text-white">=</span>
                     <span className="text-amber-300">&#123;</span>
                   </div>
                   <div className="pl-4 text-zinc-300">
-                    <span className="text-indigo-300">coreStack</span>: [<span className="text-emerald-300">'React'</span>, <span className="text-emerald-300">'TypeScript'</span>, <span className="text-emerald-300">'Node'</span>],
+                    <span className="text-indigo-300">interests</span>: [<span className="text-emerald-300">'CyberSec'</span>, <span className="text-emerald-300">'DataScience'</span>, <span className="text-emerald-300">'AI'</span>],
                   </div>
                   <div className="pl-4 text-zinc-300">
-                    <span className="text-indigo-300">smoothScroll</span>: <span className="text-amber-400">true</span>, <span className="text-zinc-400">// Lenis</span>
+                    <span className="text-indigo-300">ctfFinalist</span>: <span className="text-amber-400">true</span>, <span className="text-zinc-400">// Interfest Telkom</span>
                   </div>
                   <div className="pl-4 text-zinc-300">
-                    <span className="text-indigo-300">readyForInternship</span>: <span className="text-cyan-400">true</span>
+                    <span className="text-indigo-300">smoothScroll</span>: <span className="text-cyan-400">true</span>, <span className="text-zinc-400">// Lenis</span>
+                  </div>
+                  <div className="pl-4 text-zinc-300">
+                    <span className="text-indigo-300">openForInternship</span>: <span className="text-emerald-400">true</span>
                   </div>
                   <div className="text-amber-300">&#125;;</div>
                 </div>

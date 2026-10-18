@@ -12,7 +12,7 @@ import {
 import confetti from 'canvas-confetti'
 import { personalInfo } from '../data/portfolioData'
 import type { ContactFormData } from '../types'
-import { GithubIcon, LinkedinIcon } from './Icons'
+import { LinkedinIcon } from './Icons'
 
 export const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false)
@@ -135,8 +135,8 @@ export const Contact: React.FC = () => {
                   <MapPin className="w-4 h-4 text-cyan-400" />
                 </div>
                 <div>
-                  <div className="text-zinc-400 text-xs">Lokasi & Domisili</div>
-                  <div className="font-semibold text-white">Indonesia (WIB / GMT+7)</div>
+                  <div className="text-zinc-400 text-xs">Lokasi & Kampus</div>
+                  <div className="font-semibold text-white">Surabaya, Indonesia (ITS)</div>
                 </div>
               </div>
 
@@ -146,13 +146,28 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-zinc-400 text-xs">Ketersediaan Waktu</div>
-                  <div className="font-semibold text-emerald-400">Siap Magang Full-time / Part-time</div>
+                  <div className="font-semibold text-emerald-400">Open for Internship & Projects</div>
                 </div>
               </div>
             </div>
 
             {/* Social Cards */}
             <div className="grid grid-cols-2 gap-3">
+              <a
+                href={personalInfo.phoneUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 rounded-2xl bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/10 hover:border-emerald-500/40 flex items-center gap-3 transition-colors"
+              >
+                <div className="w-6 h-6 rounded-md bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] shrink-0">
+                  WA
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white">WhatsApp</div>
+                  <div className="text-[10px] text-zinc-400">{personalInfo.phone}</div>
+                </div>
+              </a>
+
               <a
                 href={personalInfo.linkedin}
                 target="_blank"
@@ -162,20 +177,7 @@ export const Contact: React.FC = () => {
                 <LinkedinIcon className="w-5 h-5 text-cyan-400" />
                 <div>
                   <div className="text-xs font-bold text-white">LinkedIn</div>
-                  <div className="text-[10px] text-zinc-400">Hubungkan</div>
-                </div>
-              </a>
-
-              <a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-4 rounded-2xl bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/10 hover:border-cyan-500/40 flex items-center gap-3 transition-colors"
-              >
-                <GithubIcon className="w-5 h-5 text-zinc-300" />
-                <div>
-                  <div className="text-xs font-bold text-white">GitHub</div>
-                  <div className="text-[10px] text-zinc-400">Lihat Profil</div>
+                  <div className="text-[10px] text-zinc-400">gemilang-lingua</div>
                 </div>
               </a>
             </div>

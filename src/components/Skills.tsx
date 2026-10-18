@@ -3,56 +3,53 @@ import type { ElementType } from 'react'
 import {
   Sparkles,
   Atom,
-  FileCode2,
-  Globe,
   Palette,
-  Code,
-  Layout,
-  Server,
-  Cpu,
   Network,
   Database,
-  DatabaseZap,
-  Flame,
   GitBranch,
-  Zap,
-  Send,
+  ShieldAlert,
+  Lock,
+  Terminal,
+  Key,
+  Binary,
+  Cpu,
+  BarChart3,
+  Users,
+  ClipboardCheck,
   Layers,
 } from 'lucide-react'
 import { skillsData } from '../data/portfolioData'
 import type { SkillItem } from '../types'
 import { FigmaIcon } from './Icons'
 
-// Map string icon names to icon components
 const iconMap: Record<string, ElementType> = {
-  Atom,
-  FileCode2,
-  Globe,
-  Palette,
-  Code,
-  Layout,
-  Sparkles,
-  Server,
-  Cpu,
-  Network,
+  ShieldAlert,
+  Lock,
+  Terminal,
+  Key,
+  Binary,
   Database,
-  DatabaseZap,
-  Flame,
+  Cpu,
+  BarChart3,
+  Atom,
+  Palette,
+  Sparkles,
+  Network,
+  Users,
+  ClipboardCheck,
   GitBranch,
-  Zap,
   Figma: FigmaIcon,
-  Send,
 }
 
 const categories = [
-  { id: 'all', label: 'Semua Stack' },
-  { id: 'frontend', label: 'Frontend' },
-  { id: 'backend', label: 'Backend & API' },
-  { id: 'database', label: 'Database' },
-  { id: 'tools', label: 'Tools & DevOps' },
+  { id: 'all', label: 'Semua Bidang' },
+  { id: 'cybersec', label: 'Cyber Security & CTF' },
+  { id: 'data_ai', label: 'Data Science & AI' },
+  { id: 'webdev', label: 'Web Development' },
+  { id: 'tools_mgmt', label: 'Leadership & Tools' },
 ]
 
-export const Skills: React.FC = () => {
+export function Skills() {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
   const filteredSkills = skillsData.filter((skill) => {
@@ -67,13 +64,13 @@ export const Skills: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-800/60 text-xs font-semibold text-indigo-400">
             <Layers className="w-3.5 h-3.5" />
-            <span>Keahlian & Teknologi</span>
+            <span>Keahlian & Kompetensi</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Tech Stack yang Biasa Digunakan
+            Keahlian Teknis & Manajemen Proyek
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base">
-            Kombinasi teknologi modern untuk menghasilkan aplikasi web yang tangguh, responsif, dan mudah dipelihara.
+            Kombinasi keahlian teknis keamanan siber, analisa data, web interaktif, dan koordinasi operasional tim.
           </p>
         </div>
 
@@ -97,7 +94,7 @@ export const Skills: React.FC = () => {
         {/* Skills Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredSkills.map((skill: SkillItem, index: number) => {
-            const Icon = iconMap[skill.iconName] || Code
+            const Icon = iconMap[skill.iconName] || Sparkles
             return (
               <div
                 key={index}
@@ -127,8 +124,8 @@ export const Skills: React.FC = () => {
                   <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
                     {skill.name}
                   </h3>
-                  <div className="text-[11px] text-zinc-400 capitalize mt-0.5">
-                    {skill.category}
+                  <div className="text-[11px] text-zinc-400 capitalize mt-0.5 font-mono">
+                    {skill.category.replace('_', ' & ')}
                   </div>
                 </div>
 
@@ -145,7 +142,7 @@ export const Skills: React.FC = () => {
           })}
         </div>
 
-        {/* Highlight Note for Lenis */}
+        {/* Highlight Note for Lenis and CTF */}
         <div className="mt-12 p-5 rounded-2xl bg-gradient-to-r from-violet-950/40 via-cyan-950/30 to-zinc-900/50 border border-violet-800/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center shrink-0">
@@ -159,7 +156,7 @@ export const Skills: React.FC = () => {
                 </span>
               </div>
               <p className="text-xs text-zinc-400 mt-0.5">
-                Pengalaman scrolling yang halus dan sinkron tanpa lag, cocok untuk website presentasi & portofolio modern.
+                Mengintegrasikan navigasi lancar inersial untuk eksplorasi portofolio teknologi yang menyenangkan dan modern.
               </p>
             </div>
           </div>

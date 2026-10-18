@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
                 G
               </div>
               <span className="font-bold text-white text-base tracking-tight">
-                Gilang<span className="text-cyan-400 font-mono text-xs">.dev</span>
+                Gemilang<span className="text-cyan-400 font-mono text-xs">.dev</span>
               </span>
             </div>
             <p className="text-xs sm:text-sm text-zinc-400 max-w-sm leading-relaxed">

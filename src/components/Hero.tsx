@@ -39,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCV }) => {
               </span>
               <span className="text-zinc-200">{personalInfo.status}</span>
               <span className="text-zinc-600">•</span>
-              <span className="text-cyan-400 font-mono text-[11px]">Mahasiswa Informatika</span>
+              <span className="text-cyan-400 font-mono text-[11px]">Mahasiswa Teknologi Informasi ITS</span>
             </div>
 
             {/* Main Title */}
@@ -145,7 +145,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCV }) => {
                   </div>
                   <div className="flex items-center gap-1.5 text-zinc-400 font-mono text-xs">
                     <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>gilang-portfolio.tsx</span>
+                    <span>gemilang-portfolio.tsx</span>
                   </div>
                   <div className="w-6"></div>
                 </div>
@@ -171,7 +171,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCV }) => {
                   <div>
                     <h2 className="text-xl font-bold text-white tracking-tight">{personalInfo.fullName}</h2>
                     <p className="text-xs text-zinc-400 flex items-center gap-1.5 mt-0.5">
-                      <span>Mahasiswa Teknik Informatika</span>
+                      <span>Teknologi Informasi — ITS Surabaya</span>
                     </p>
                     <div className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-1 rounded-md bg-cyan-950/70 border border-cyan-800/60 text-[11px] font-medium text-cyan-300">
                       <Sparkles className="w-3 h-3" />

@@ -88,11 +88,11 @@ export const CVModal: React.FC<CVModalProps> = ({ isOpen, onClose }) => {
             </h5>
             <div className="p-4 rounded-xl bg-zinc-900/40 border border-white/5 space-y-1">
               <div className="flex justify-between font-bold text-white">
-                <span>S1 Teknik Informatika</span>
+                <span>S1 Teknologi Informasi — ITS Surabaya</span>
                 <span className="text-xs font-mono text-cyan-400">2022 - Sekarang</span>
               </div>
               <p className="text-xs text-zinc-400">
-                Fokus Studi: Rekayasa Perangkat Lunak, Pemrograman Web Modern, Algoritma & Basis Data.
+                Fokus Studi: Rekayasa Web Modern, Cloud Computing, Keamanan Informasi, dan Sistem Terdistribusi.
               </p>
             </div>
           </div>
@@ -149,7 +149,7 @@ export const CVModal: React.FC<CVModalProps> = ({ isOpen, onClose }) => {
         {/* Footer actions */}
         <div className="pt-4 border-t border-white/10 flex items-center justify-between">
           <span className="text-[11px] text-zinc-400">
-            Dibuat untuk portofolio resmi Gilang
+            Dibuat untuk portofolio resmi Gemilang Ananda Lingua
           </span>
           <button
             onClick={onClose}

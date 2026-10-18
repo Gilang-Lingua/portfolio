@@ -39,13 +39,13 @@ export const Navbar: React.FC = () => {
           </div>
           <div>
             <div className="font-bold text-white text-base tracking-tight flex items-center gap-1">
-              Gilang
+              Gemilang
               <span className="text-cyan-400 font-mono text-xs px-1.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/60">
                 .dev
               </span>
             </div>
             <div className="text-[10px] text-zinc-400 font-medium tracking-wide">
-              Web Portfolio
+              Web Portfolio • ITS
             </div>
           </div>
         </button>

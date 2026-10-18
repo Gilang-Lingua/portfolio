@@ -1,6 +1,6 @@
 # 🚀 Portofolio Web Modern (Lenis Smooth Scroll)
 
-Portofolio web siap pakai (*production-ready*) yang dirancang khusus untuk mahasiswa teknik informatika / calon magang (*internship*) dan web developer. Dilengkapi integrasi **Lenis Smooth Scroll** untuk pengalaman scrolling 60fps yang sangat halus, elegan, dan interaktif.
+Portofolio web siap pakai (*production-ready*) untuk **Gemilang Ananda Lingua**, mahasiswa Departemen Teknologi Informasi, Institut Teknologi Sepuluh Nopember (ITS). Dilengkapi integrasi **Lenis Smooth Scroll** untuk pengalaman scrolling 60fps yang sangat halus, elegan, dan interaktif.
 
 ---
 

@@ -74,9 +74,9 @@ export const About: React.FC = () => {
                 <div className="space-y-1">
                   <div className="flex items-center gap-1.5 text-xs text-zinc-400">
                     <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Jurusan</span>
+                    <span>Jurusan / Kampus</span>
                   </div>
-                  <div className="text-xs sm:text-sm font-semibold text-zinc-200">Teknik Informatika</div>
+                  <div className="text-xs sm:text-sm font-semibold text-zinc-200">Teknologi Informasi, ITS</div>
                 </div>
 
                 <div className="space-y-1">
@@ -92,7 +92,7 @@ export const About: React.FC = () => {
                     <MapPin className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Lokasi</span>
                   </div>
-                  <div className="text-xs sm:text-sm font-semibold text-zinc-200">Indonesia (Remote/WFO)</div>
+                  <div className="text-xs sm:text-sm font-semibold text-zinc-200">Surabaya (Hybrid/Remote)</div>
                 </div>
               </div>
             </div>

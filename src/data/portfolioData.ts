@@ -1,21 +1,21 @@
 import type { Project, SkillItem, ExperienceItem } from '../types'
 
 export const personalInfo = {
-  name: 'Gilang',
-  fullName: 'Gilang Ramadhan',
-  headline: 'Web Developer & Mahasiswa Informatika',
+  name: 'Gemilang',
+  fullName: 'Gemilang Ananda Lingua',
+  headline: 'Web Developer & Mahasiswa Teknologi Informasi ITS',
   status: 'Terbuka untuk Magang & Project Baru',
-  location: 'Indonesia',
-  email: 'gilang.dev.work@gmail.com',
+  location: 'Surabaya, Indonesia',
+  email: 'gemilang.lingua@gmail.com',
   github: 'https://github.com',
   linkedin: 'https://linkedin.com',
   instagram: 'https://instagram.com',
   bioShort:
-    'Mahasiswa Informatika yang berfokus pada pengembangan web modern dengan React, TypeScript, dan ekosistem modern. Senang menciptakan antarmuka yang cepat, estetik, dan interaktif.',
+    'Mahasiswa Teknologi Informasi Institut Teknologi Sepuluh Nopember (ITS) yang berfokus pada pengembangan web modern dengan React, TypeScript, dan ekosistem modern. Senang menciptakan antarmuka yang cepat, estetik, dan interaktif.',
   bioLong: [
-    'Halo! Saya Gilang, seorang mahasiswa Teknik Informatika yang memiliki antusiasme tinggi terhadap Software Engineering dan Modern Web Development.',
+    'Halo! Saya Gemilang Ananda Lingua, seorang mahasiswa Departemen Teknologi Informasi di Institut Teknologi Sepuluh Nopember (ITS) Surabaya dengan antusiasme tinggi pada Software Engineering dan Modern Web Development.',
     'Saya terbiasa membangun antarmuka web yang responsif, terstruktur rapi, serta berfokus pada performa dan kenyamanan pengguna (User Experience). Menguasai stack frontend modern seperti React, Next.js, Tailwind CSS, serta integrasi REST API dan backend berbasis Node.js.',
-    'Saat ini saya sedang aktif mencari kesempatan magang (internship) di perusahaan teknologi untuk berkontribusi, belajar dari tim profesional, dan menyelesaikan permasalahan nyata melalui kode berkualitas.',
+    'Saat ini saya sedang aktif mencari kesempatan magang (internship) di perusahaan teknologi untuk berkontribusi, mengasah keahlian bersama tim profesional, dan menghadirkan solusi digital yang berdampak nyata.',
   ],
   stats: [
     { label: 'Proyek Selesai', value: '12+' },
@@ -159,24 +159,24 @@ export const experienceData: ExperienceItem[] = [
   },
   {
     id: 'exp-2',
-    role: 'Asisten Laboratorium Pemrograman Web',
-    organization: 'Fakultas Ilmu Komputer & Informatika',
+    role: 'Asisten Laboratorium Rekayasa Web & Komputasi',
+    organization: 'Departemen Teknologi Informasi - FTEIC ITS',
     period: '2024 - 2025',
     type: 'Pendidikan',
     description:
       'Membimbing 60+ mahasiswa junior dalam memahami fundamental HTML, CSS, JavaScript modern, serta dasar-dasar arsitektur backend dan basis data relasional. Mengoreksi tugas praktikum mingguan dan memberikan feedback teknis.',
     skills: ['Mentoring', 'JavaScript', 'HTML/CSS', 'MySQL', 'Problem Solving'],
-    location: 'Kampus',
+    location: 'ITS Sukolilo, Surabaya',
   },
   {
     id: 'exp-3',
-    role: 'Staff Divisi Media & Teknologi Informasi',
-    organization: 'Himpunan Mahasiswa Teknik Informatika (HMTI)',
+    role: 'Staff Divisi Riset & Pengembangan IT',
+    organization: 'Himpunan Mahasiswa Teknologi Informasi (HMIT) ITS',
     period: '2023 - 2024',
     type: 'Organisasi',
     description:
       'Bertanggung jawab atas pemeliharaan website resmi himpunan, pembuatan landing page pendaftaran acara seminar nasional, dan publikasi aset digital organisasi.',
     skills: ['Web Development', 'Figma', 'Teamwork', 'Project Coordination'],
-    location: 'Kampus',
+    location: 'ITS Sukolilo, Surabaya',
   },
 ]

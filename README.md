@@ -1,10 +1,10 @@
-# 🚀 Portofolio Web Modern (Lenis Smooth Scroll)
+# Portofolio Web
 
-Portofolio web siap pakai (*production-ready*) untuk **Gemilang Ananda Lingua**, mahasiswa Departemen Teknologi Informasi, Institut Teknologi Sepuluh Nopember (ITS). Dilengkapi integrasi **Lenis Smooth Scroll** untuk pengalaman scrolling 60fps yang sangat halus, elegan, dan interaktif.
+Portofolio web **Gemilang Ananda Lingua**, mahasiswa Departemen Teknologi Informasi, Institut Teknologi Sepuluh Nopember (ITS). Dilengkapi integrasi **Lenis Smooth Scroll** untuk pengalaman scrolling 60fps yang sangat halus, elegan, dan interaktif.
 
 ---
 
-## ✨ Fitur Unggulan
+##  Fitur Unggulan
 
 1. **Lenis Smooth Scroll**:
    - Transisi inersia mulus saat scrolling mouse wheel dan touch.
@@ -25,7 +25,7 @@ Portofolio web siap pakai (*production-ready*) untuk **Gemilang Ananda Lingua**,
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Framework**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
 - **Bundler & Tooling**: [Vite](https://vitejs.dev/)
@@ -36,7 +36,7 @@ Portofolio web siap pakai (*production-ready*) untuk **Gemilang Ananda Lingua**,
 
 ---
 
-## 🏁 Cara Menjalankan Project
+##  Cara Menjalankan Project
 
 ### 1. Jalankan Development Server
 Untuk melihat tampilan langsung di browser dengan Hot Module Replacement (HMR):
@@ -59,7 +59,7 @@ npm run preview
 
 ---
 
-## 📝 Cara Kustomisasi Data & Konten
+##  Cara Kustomisasi Data & Konten
 
 Semua data portofolio telah dipusatkan dalam satu file yang mudah diedit:
 👉 **`src/data/portfolioData.ts`**
@@ -72,7 +72,7 @@ Anda dapat dengan mudah mengubah:
 
 ---
 
-## ⚙️ Pengaturan Lenis Smooth Scroll
+##  Pengaturan Lenis Smooth Scroll
 
 Konfigurasi Lenis berada di:
 👉 **`src/context/LenisContext.tsx`**
@@ -86,7 +86,3 @@ const lenis = new Lenis({
   touchMultiplier: 1.5, // Sensitivitas layar sentuh
 })
 ```
-
----
-
-Dibuat dengan ❤️ untuk persiapan karir & magang mahasiswa teknologi.

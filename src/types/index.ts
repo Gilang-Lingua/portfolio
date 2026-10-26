@@ -3,22 +3,19 @@ export interface Project {
   title: string
   tagline: string
   description: string
-  category: 'Cyber Security' | 'Data & AI' | 'Web Dev' | 'Semua'
-  featured: boolean
+  category: string
   tags: string[]
-  stats?: { label: string; value: string }[]
   highlights: string[]
   liveUrl?: string
   githubUrl?: string
-  imageBg: string
+  instagramUrl?: string
+  insstagramURL?: string
 }
 
-export interface SkillItem {
-  name: string
-  category: 'cybersec' | 'data_ai' | 'webdev' | 'tools_mgmt'
-  level: 'Mahir' | 'Menengah' | 'Familiar'
-  iconName: string
-  color: string
+export interface SkillGroup {
+  category: string
+  description: string
+  items: string[]
 }
 
 export interface ExperienceItem {
@@ -26,26 +23,29 @@ export interface ExperienceItem {
   role: string
   organization: string
   period: string
-  type: 'Kepanitiaan' | 'Organisasi' | 'Pendidikan' | 'Magang'
+  type: 'Kepanitiaan' | 'Organisasi'
   description: string
-  bullets?: string[]
-  skills: string[]
+  bullets: string[]
   location: string
 }
 
-export interface AchievementItem {
+export interface CompetitionItem {
+  id: string
+  title: string
+  event: string
+  year: string
+  status: 'Finalist' | 'Participant'
+}
+
+export interface CertificationItem {
   id: string
   title: string
   issuer: string
   year: string
-  type: 'Kompetisi' | 'Sertifikasi' | 'Pelatihan'
-  description?: string
-  iconType: 'trophy' | 'certificate' | 'award'
 }
 
 export interface ContactFormData {
   name: string
   email: string
-  subject: string
   message: string
 }

@@ -1,19 +1,24 @@
 import { useEffect } from 'react'
 import {
   X,
-  Printer,
   GraduationCap,
   Briefcase,
   Users,
   Trophy,
+  Scroll,
   Mail,
   Phone,
   MapPin,
   CheckCircle2,
 } from 'lucide-react'
-import { personalInfo, experienceData, achievementsData } from '../data/portfolioData'
+import {
+  personalInfo,
+  experienceData,
+  competitionsData,
+  certificationsData,
+} from '../data/portfolioData'
 import { useLenis } from '../context/LenisContext'
-import { LinkedinIcon } from './Icons'
+import { LinkedinIcon, GithubIcon } from './Icons'
 
 interface CVModalProps {
   isOpen: boolean
@@ -36,10 +41,6 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
 
   if (!isOpen) return null
 
-  const handlePrint = () => {
-    window.print()
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-fadeIn">
       <div
@@ -54,27 +55,17 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
             </div>
             <div>
               <h3 className="text-base font-bold text-white">Curriculum Vitae</h3>
-              <p className="text-[11px] text-zinc-400">Gemilang Ananda Lingua • ITS Surabaya</p>
+              <p className="text-xs text-zinc-400">Gemilang Ananda Lingua • ITS Surabaya</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
-              className="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 text-xs flex items-center gap-1.5 transition-colors"
-              title="Cetak / Simpan PDF"
-            >
-              <Printer className="w-4 h-4 text-cyan-400" />
-              <span className="hidden sm:inline">Cetak PDF</span>
-            </button>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-colors"
-              aria-label="Tutup Modal"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-colors"
+            aria-label="Tutup Modal"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Identity & Contact Bar */}
@@ -106,6 +97,15 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
               <LinkedinIcon className="w-3.5 h-3.5 text-cyan-400" />
               <span>linkedin.com/in/gemilang-lingua</span>
             </a>
+            <a
+              href={personalInfo.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-cyan-300"
+            >
+              <GithubIcon className="w-3.5 h-3.5 text-cyan-400" />
+              <span>github.com/Gilang-Lingua</span>
+            </a>
             <div className="flex items-center gap-1.5 text-zinc-400">
               <MapPin className="w-3.5 h-3.5 text-cyan-400" />
               <span>{personalInfo.location}</span>
@@ -130,7 +130,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
                   <div className="font-bold text-white text-sm">{edu.school}</div>
                   <div className="text-cyan-300 font-medium">{edu.degree}</div>
                 </div>
-                <div className="text-zinc-400 font-mono text-[11px] sm:text-right shrink-0">
+                <div className="text-zinc-400 font-mono text-xs sm:text-right shrink-0">
                   <div>{edu.location}</div>
                   <div>{edu.period}</div>
                 </div>
@@ -155,7 +155,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
                       <div className="font-bold text-white text-sm">{item.organization}</div>
                       <div className="text-xs text-cyan-300 font-medium">{item.role}</div>
                     </div>
-                    <div className="text-[11px] font-mono text-zinc-400 sm:text-right shrink-0">
+                    <div className="text-xs font-mono text-zinc-400 sm:text-right shrink-0">
                       <div>{item.period}</div>
                       <div>{item.location}</div>
                     </div>
@@ -192,7 +192,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
                       <div className="font-bold text-white text-sm">{item.organization}</div>
                       <div className="text-xs text-violet-300 font-medium">{item.role}</div>
                     </div>
-                    <div className="text-[11px] font-mono text-zinc-400 sm:text-right shrink-0">
+                    <div className="text-xs font-mono text-zinc-400 sm:text-right shrink-0">
                       <div>{item.period}</div>
                       <div>{item.location}</div>
                     </div>
@@ -213,20 +213,50 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
           </div>
         </div>
 
-        {/* Achievements & Certifications */}
+        {/* Competitions */}
         <div className="space-y-3">
           <h5 className="text-xs uppercase tracking-wider font-bold text-zinc-400 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-amber-400" />
-            <span>Achievements & Certifications</span>
+            <span>Pencapaian Kompetisi (Capture The Flag)</span>
           </h5>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {achievementsData.map((ach) => (
-              <div key={ach.id} className="p-3.5 rounded-xl bg-zinc-900/40 border border-white/5 space-y-1">
+            {competitionsData.map((comp) => (
+              <div key={comp.id} className="p-3.5 rounded-xl bg-zinc-900/40 border border-white/5 space-y-1">
                 <div className="flex justify-between items-start gap-2">
-                  <span className="font-bold text-white text-xs">{ach.title}</span>
-                  <span className="text-[10px] font-mono text-amber-400 shrink-0">{ach.year}</span>
+                  <span className="font-bold text-white text-xs">{comp.title}</span>
+                  <span
+                    className={`text-xs font-mono px-1.5 py-0.5 rounded ${
+                      comp.status === 'Finalist'
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        : 'bg-zinc-800 text-zinc-400'
+                    }`}
+                  >
+                    {comp.status}
+                  </span>
                 </div>
-                <div className="text-[11px] text-zinc-400">{ach.issuer}</div>
+                <div className="text-xs text-zinc-400 flex justify-between">
+                  <span>{comp.event}</span>
+                  <span className="font-mono text-cyan-400">{comp.year}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Certifications */}
+        <div className="space-y-3">
+          <h5 className="text-xs uppercase tracking-wider font-bold text-zinc-400 flex items-center gap-2">
+            <Scroll className="w-4 h-4 text-cyan-400" />
+            <span>Sertifikasi & Pelatihan</span>
+          </h5>
+          <div className="space-y-2">
+            {certificationsData.map((cert) => (
+              <div key={cert.id} className="p-3.5 rounded-xl bg-zinc-900/40 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+                <div>
+                  <div className="font-semibold text-white">{cert.title}</div>
+                  <div className="text-xs text-zinc-400">{cert.issuer}</div>
+                </div>
+                <span className="text-xs font-mono text-cyan-400 shrink-0">{cert.year}</span>
               </div>
             ))}
           </div>
@@ -234,7 +264,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
 
         {/* Footer actions */}
         <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-          <span className="text-[11px] text-zinc-400">
+          <span className="text-xs text-zinc-400">
             Resmi dari CV Gemilang Ananda Lingua
           </span>
           <button

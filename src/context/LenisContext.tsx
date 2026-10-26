@@ -50,7 +50,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       setIsScrolled(e.scroll > 50)
 
       // Section spy
-      const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'contact']
+      const sections = ['hero', 'about', 'skills', 'experience', 'achievements', 'projects', 'contact']
       const scrollPos = e.scroll + 200
 
       for (let i = sections.length - 1; i >= 0; i--) {

@@ -1,165 +1,43 @@
-import { useState } from 'react'
-import type { ElementType } from 'react'
-import {
-  Sparkles,
-  Atom,
-  Palette,
-  Network,
-  Database,
-  GitBranch,
-  ShieldAlert,
-  Lock,
-  Terminal,
-  Key,
-  Binary,
-  Cpu,
-  BarChart3,
-  Users,
-  ClipboardCheck,
-  Layers,
-} from 'lucide-react'
-import { skillsData } from '../data/portfolioData'
-import type { SkillItem } from '../types'
-import { FigmaIcon } from './Icons'
-
-const iconMap: Record<string, ElementType> = {
-  ShieldAlert,
-  Lock,
-  Terminal,
-  Key,
-  Binary,
-  Database,
-  Cpu,
-  BarChart3,
-  Atom,
-  Palette,
-  Sparkles,
-  Network,
-  Users,
-  ClipboardCheck,
-  GitBranch,
-  Figma: FigmaIcon,
-}
-
-const categories = [
-  { id: 'all', label: 'Semua Bidang' },
-  { id: 'cybersec', label: 'Cyber Security & CTF' },
-  { id: 'data_ai', label: 'Data Science & AI' },
-  { id: 'webdev', label: 'Web Development' },
-  { id: 'tools_mgmt', label: 'Leadership & Tools' },
-]
+import { skillGroups } from '../data/portfolioData'
 
 export function Skills() {
-  const [selectedCategory, setSelectedCategory] = useState('all')
-
-  const filteredSkills = skillsData.filter((skill) => {
-    if (selectedCategory === 'all') return true
-    return skill.category === selectedCategory
-  })
-
   return (
-    <section id="skills" className="py-20 relative bg-zinc-950/40">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="skills" className="py-16 relative bg-zinc-950/40">
+      <div className="content-container">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-800/60 text-xs font-semibold text-indigo-400">
-            <Layers className="w-3.5 h-3.5" />
-            <span>Keahlian & Kompetensi</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Keahlian Teknis & Manajemen Proyek
+        <div className="text-left space-y-2 mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Minat & Keahlian Teknis
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base">
-            Kombinasi keahlian teknis keamanan siber, analisa data, web interaktif, dan koordinasi operasional tim.
+          <p className="text-zinc-400 text-sm">
+            Teknologi, lingkungan kerja, dan kemampuan yang sedang dipelajari serta aktif digunakan.
           </p>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 ${
-                selectedCategory === cat.id
-                  ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/20'
-                  : 'bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-white/5'
-              }`}
+        {/* Skill Groups Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+          {skillGroups.map((group, idx) => (
+            <div
+              key={idx}
+              className="p-5 rounded-2xl bg-zinc-900/60 border border-white/5 hover:border-white/10 transition-colors space-y-3"
             >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+              <div>
+                <h3 className="text-base font-bold text-white">{group.category}</h3>
+                <p className="text-xs text-zinc-400 mt-0.5">{group.description}</p>
+              </div>
 
-        {/* Skills Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredSkills.map((skill: SkillItem, index: number) => {
-            const Icon = iconMap[skill.iconName] || Sparkles
-            return (
-              <div
-                key={index}
-                className="group relative p-4 sm:p-5 rounded-2xl bg-zinc-900/60 hover:bg-zinc-900/95 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div
-                    className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${skill.color} p-0.5 shadow-md group-hover:scale-110 transition-transform duration-200`}
-                  >
-                    <div className="w-full h-full rounded-[10px] bg-[#0c0e15] flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-
+              <div className="flex flex-wrap gap-2 pt-1">
+                {group.items.map((item, itemIdx) => (
                   <span
-                    className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
-                      skill.level === 'Mahir'
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                        : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30'
-                    }`}
+                    key={itemIdx}
+                    className="text-xs px-3 py-1.5 rounded-lg bg-black/40 border border-white/5 text-zinc-300 font-mono"
                   >
-                    {skill.level}
+                    {item}
                   </span>
-                </div>
-
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {skill.name}
-                  </h3>
-                  <div className="text-[11px] text-zinc-400 capitalize mt-0.5 font-mono">
-                    {skill.category.replace('_', ' & ')}
-                  </div>
-                </div>
-
-                {/* Subtle bottom indicator */}
-                <div className="mt-3 w-full bg-zinc-800 h-1 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-500 ${
-                      skill.level === 'Mahir' ? 'w-4/5' : 'w-3/5'
-                    }`}
-                  />
-                </div>
+                ))}
               </div>
-            )
-          })}
-        </div>
-
-        {/* Highlight Note for Lenis and CTF */}
-        <div className="mt-12 p-5 rounded-2xl bg-gradient-to-r from-violet-950/40 via-cyan-950/30 to-zinc-900/50 border border-violet-800/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center shrink-0">
-              <Sparkles className="w-5 h-5 text-violet-400 animate-spin" style={{ animationDuration: '8s' }} />
             </div>
-            <div>
-              <div className="text-sm font-bold text-white flex items-center gap-2">
-                <span>Dioptimalkan dengan Lenis Smooth Scroll</span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/20 text-violet-300 border border-violet-500/30">
-                  Active 60fps
-                </span>
-              </div>
-              <p className="text-xs text-zinc-400 mt-0.5">
-                Mengintegrasikan navigasi lancar inersial untuk eksplorasi portofolio teknologi yang menyenangkan dan modern.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

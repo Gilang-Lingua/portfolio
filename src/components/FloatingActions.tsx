@@ -6,6 +6,13 @@ export function FloatingActions() {
 
   if (!isScrolled) return null
 
+  const size = 44
+  const strokeWidth = 2.5
+  const center = size / 2
+  const radius = center - strokeWidth - 2
+  const circumference = 2 * Math.PI * radius
+  const strokeDashoffset = circumference - (scrollProgress / 100) * circumference
+
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-2 animate-fadeIn">
       {/* Quick Email / Contact Action */}
@@ -25,32 +32,37 @@ export function FloatingActions() {
         title={`Kembali ke atas (${scrollProgress}%)`}
         aria-label="Kembali ke atas"
       >
-        {/* SVG Progress Circle */}
-        <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none p-0.5">
+        {/* SVG Progress Circle - perfectly centered */}
+        <svg
+          viewBox="0 0 44 44"
+          className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none"
+        >
+          {/* Background circle track */}
           <circle
-            cx="20"
-            cy="20"
-            r="16"
+            cx={center}
+            cy={center}
+            r={radius}
             className="text-white/10"
-            strokeWidth="2.5"
+            strokeWidth={strokeWidth}
             stroke="currentColor"
-            fill="transparent"
+            fill="none"
           />
+          {/* Dynamic progress circle */}
           <circle
-            cx="20"
-            cy="20"
-            r="16"
-            className="text-cyan-400 transition-all duration-75"
-            strokeWidth="2.5"
-            strokeDasharray={100}
-            strokeDashoffset={100 - scrollProgress}
+            cx={center}
+            cy={center}
+            r={radius}
+            className="text-cyan-400 transition-all duration-100 ease-out"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
             stroke="currentColor"
-            fill="transparent"
+            fill="none"
           />
         </svg>
 
-        <ArrowUp className="w-4 h-4 text-cyan-400 group-hover:-translate-y-0.5 transition-transform" />
+        <ArrowUp className="w-4 h-4 text-cyan-400 group-hover:-translate-y-0.5 transition-transform relative z-10" />
       </button>
     </div>
   )

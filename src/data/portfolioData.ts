@@ -140,8 +140,8 @@ export const experienceData: ExperienceItem[] = [
     description:
       'Memimpin Biro Pengembangan di Departemen HRD untuk merancang inisiatif pengembangan potensi dan pelatihan internal mahasiswa Teknologi Informasi ITS.',
     bullets: [
-      'Memimpin perencanaan inisiatif pengembangan SDM anggota himpunan.',
-      'Mengawasi integrasi program kerja pengembangan organisasi bersama tim internal.',
+      'Overseeing the implementation of HMIT work programs, including OKKBK IT, AppreciateIT, ITBoost, LKMM-TD HMIT, and Performance Mapping and Monitoring.',
+      'Developing communication, team coordination, progress monitoring, and program evaluation skills to ensure activities are executed effectively and meet established targets.',
     ],
   },
   {
@@ -152,7 +152,7 @@ export const experienceData: ExperienceItem[] = [
     type: 'Kepanitiaan',
     location: 'Surabaya, Indonesia',
     description:
-      'Mengoordinasikan alur kerja perlombaan, perumusan aturan teknis, dan jadwal pelaksanaan kompetisi Capture The Flag (CTF).',
+      'Coordinated end-to-end competition workflows, technical rules, and event schedules for CTF.',
     bullets: [
       'Coordinated end-to-end competition workflows, technical rules, and event schedules for CTF.',
       'Supervised competition staff and controlled operational execution during event execution.',
@@ -194,9 +194,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Organisasi',
     location: 'Surabaya, Indonesia',
     description:
-      'Magang di bidang HRD untuk mendukung program peningkatan kapasitas internal dan kegiatan kekeluargaan mahasiswa departemen.',
+      'Served as an Operator for the ITBoost work program, managing technical and operational aspects during its implementation.',
     bullets: [
-      'Mendukung operasional program kerja HRD dan keterlibatan anggota himpunan.',
+      'Served as an Operator for the ITBoost work program, managing technical and operational aspects during its implementation.',
+      'PIC for the HMIT Performance Mapping and Monitoring program.',
     ],
   },
   {
@@ -207,9 +208,9 @@ export const experienceData: ExperienceItem[] = [
     type: 'Organisasi',
     location: 'Surabaya, Indonesia',
     description:
-      'Membuat konten visual, publikasi media sosial, dan materi kreatif kegiatan komunitas.',
+      'Creating visual designs and managing social media publications.',
     bullets: [
-      'Membuat desain visual dan publikasi media sosial.',
+      'Creating visual designs and managing social media publications.',
     ],
   },
 ]

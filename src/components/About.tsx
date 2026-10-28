@@ -7,6 +7,7 @@ import {
   Users,
 } from 'lucide-react'
 import { personalInfo } from '../data/portfolioData'
+import { useReveal } from '../hooks/useGsap'
 
 const domains = [
   {
@@ -36,11 +37,17 @@ const domains = [
 ]
 
 export function About() {
+  const revealRef = useReveal({
+    childSelector: '[data-gsap="reveal"]',
+    stagger: 0.1,
+    y: 18,
+  })
+
   return (
-    <section id="about" className="py-16 relative">
+    <section ref={revealRef} id="about" className="py-16 relative">
       <div className="content-container">
         {/* Section Header */}
-        <div className="text-left space-y-2 mb-10">
+        <div data-gsap="reveal" className="text-left space-y-2 mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Tentang Saya
           </h2>
@@ -53,7 +60,7 @@ export function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Narrative & Education */}
           <div className="lg:col-span-7 space-y-5">
-            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-white/10 space-y-3.5 text-left">
+            <div data-gsap="reveal" className="p-6 rounded-2xl bg-zinc-900/80 border border-white/10 space-y-3.5 text-left">
               {personalInfo.bioLong.map((paragraph, index) => (
                 <p key={index} className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
                   {paragraph}
@@ -73,7 +80,7 @@ export function About() {
             </div>
 
             {/* Education History */}
-            <div className="p-5 rounded-2xl bg-zinc-900/40 border border-white/5 space-y-3 text-left">
+            <div data-gsap="reveal" className="p-5 rounded-2xl bg-zinc-900/80 border border-white/5 space-y-3 text-left">
               <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
                 Pendidikan
               </h3>
@@ -81,7 +88,8 @@ export function About() {
                 {personalInfo.education.map((edu, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-black/40 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs"
+                    data-gsap="reveal"
+                    className="p-3 rounded-xl bg-zinc-900/80 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs"
                   >
                     <div>
                       <div className="font-semibold text-white">{edu.school}</div>
@@ -104,7 +112,8 @@ export function About() {
               return (
                 <div
                   key={index}
-                  className="p-4 rounded-xl bg-zinc-900/50 hover:bg-zinc-900/80 border border-white/5 transition-all flex items-start gap-3.5"
+                  data-gsap="reveal"
+                  className="p-4 rounded-xl bg-zinc-900/80 hover:bg-zinc-900/80 border border-white/5 transition-all flex items-start gap-3.5"
                 >
                   <div className="w-9 h-9 rounded-lg bg-zinc-800 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
                     <Icon className="w-4 h-4 text-cyan-400" />

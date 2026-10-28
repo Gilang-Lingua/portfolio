@@ -1,13 +1,20 @@
 import { FolderGit2, ExternalLink } from 'lucide-react'
 import { projectsData } from '../data/portfolioData'
 import { GithubIcon } from './Icons'
+import { useReveal } from '../hooks/useGsap'
 
 export function Projects() {
+  const revealRef = useReveal({
+    childSelector: '[data-gsap="reveal"]',
+    stagger: 0.12,
+    y: 18,
+  })
+
   return (
-    <section id="projects" className="py-16 relative">
+    <section ref={revealRef} id="projects" className="py-16 relative">
       <div className="content-container">
         {/* Section Header */}
-        <div className="text-left space-y-2 mb-10">
+        <div data-gsap="reveal" className="text-left space-y-2 mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Eksplorasi & Proyek Sederhana
           </h2>
@@ -21,7 +28,8 @@ export function Projects() {
           {projectsData.map((project) => (
             <div
               key={project.id}
-              className="p-5 rounded-2xl bg-zinc-900/50 border border-white/5 hover:border-white/15 transition-all flex flex-col justify-between space-y-4"
+              data-gsap="reveal"
+              className="p-5 rounded-2xl bg-zinc-900/80 border border-white/5 hover:border-white/15 transition-all flex flex-col justify-between space-y-4"
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">

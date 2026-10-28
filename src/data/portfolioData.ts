@@ -42,24 +42,77 @@ export const personalInfo = {
 
 export const skillGroups: SkillGroup[] = [
   {
-    category: 'Cyber Security',
-    description: 'Fokus peminatan & kompetisi CTF',
-    items: ['Capture The Flag (CTF)', 'Web Security Basics', 'Linux Environment', 'Network Basics'],
+    category: 'Bahasa Pemrograman',
+    description: 'Bahasa pemrograman yang dipelajari dan digunakan',
+    items: ['Python', 'C', 'C++', 'Java', 'JavaScript', 'SQL'],
   },
   {
-    category: 'Data Science & Programming',
-    description: 'Pengolahan data dan logika pemrograman',
-    items: ['Python', 'SQL & Database Basics', 'Spreadsheets & Data Management', 'C / C++'],
+    category: 'Web Development',
+    description: 'Teknologi dan tools untuk pengembangan web',
+    items: ['HTML', 'CSS', 'JavaScript', 'React.js', 'TypeScript', 'Tailwind CSS', 'Vite', 'GSAP', 'Lenis'],
   },
   {
-    category: 'Web & Tools',
-    description: 'Eksplorasi web dan tools pendukung',
-    items: ['HTML, CSS & JavaScript', 'React Basics', 'Git & GitHub', 'Figma & Creative Media'],
+    category: 'Mobile App Development',
+    description: 'Pengembangan dan pengujian aplikasi Mobile',
+    items: ['Android Development', 'Java', 'XML Layout', 'UI Implementation', 'Application Testing'],
+  },
+  {
+    category: 'Cybersecurity',
+    description: 'Dasar keamanan web, jaringan, dan kriptografi',
+    items: ['Linux Environment', 'Web Security Fundamentals', 'Network Fundamentals', 'Web Security Testing', 'Cryptography'],
+  },
+  {
+    category: 'Machine Learning & AI',
+    description: 'Pengolahan data dan penerapan machine learning',
+    items: ['Python', 'Pandas', 'NumPy', 'Scikit-learn', 'Matplotlib', 'Data Preprocessing', 'Data Analysis', 'Machine Learning'],
+  },
+  {
+    category: 'Databases & Data Engineering',
+    description: 'Pengelolaan dan transformasi data',
+    items: ['MySQL', 'SQL', 'Database Management', 'Data Cleaning', 'Data Transformation', 'Data Preprocessing'],
+  },
+  {
+    category: 'Tools',
+    description: 'Tools pengembangan, analisis, dan simulasi',
+    items: [
+      'Git',
+      'GitHub',
+      'Visual Studio Code',
+      'Docker',
+      'Android Studio',
+      'Google Colab',
+      'Kaggle',
+      'CloudSim Plus',
+      'GNS3',
+      'Tinkercad',
+      'Burp Suite',
+    ],
+  },
+  {
+    category: 'IT Support & Troubleshooting',
+    description: 'Dukungan teknis dan pemeliharaan sistem komputer',
+    items: [
+      'Hardware Troubleshooting',
+      'Software Troubleshooting',
+      'PC Assembly',
+      'Operating System Configuration',
+      'Software Installation',
+      'System Maintenance',
+    ],
   },
   {
     category: 'Koordinasi & Organisasi',
     description: 'Pengalaman lapangan dalam tim dan acara',
-    items: ['Team Coordination', 'Event Workflow Supervision', 'Technical Guidelines', 'Mentoring'],
+    items: [
+      'Team Leadership',
+      'Team Coordination',
+      'Team Supervision',
+      'Event Workflow Management',
+      'Mentoring',
+      'Project Coordination',
+      'Team Collaboration',
+      'Communication',
+    ],
   },
 ]
 

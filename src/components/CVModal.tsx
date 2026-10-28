@@ -69,7 +69,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
         </div>
 
         {/* Identity & Contact Bar */}
-        <div className="p-5 rounded-2xl bg-zinc-900/60 border border-white/10 space-y-3">
+        <div className="p-5 rounded-2xl bg-zinc-900/80 border border-white/10 space-y-3">
           <div>
             <h4 className="text-2xl font-extrabold text-white tracking-tight uppercase">
               {personalInfo.fullName}
@@ -125,7 +125,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
           </h5>
           <div className="space-y-2">
             {personalInfo.education.map((edu, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-zinc-900/40 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+              <div key={idx} className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
                 <div>
                   <div className="font-bold text-white text-sm">{edu.school}</div>
                   <div className="text-cyan-300 font-medium">{edu.degree}</div>
@@ -149,7 +149,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
             {experienceData
               .filter((e) => e.type === 'Kepanitiaan')
               .map((item) => (
-                <div key={item.id} className="p-4 rounded-xl bg-zinc-900/40 border border-white/5 space-y-2">
+                <div key={item.id} className="p-4 rounded-xl bg-zinc-900/80 border border-white/5 space-y-2">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <div>
                       <div className="font-bold text-white text-sm">{item.organization}</div>
@@ -179,18 +179,18 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
         {/* Organizational Experience */}
         <div className="space-y-3">
           <h5 className="text-xs uppercase tracking-wider font-bold text-zinc-400 flex items-center gap-2">
-            <Users className="w-4 h-4 text-violet-400" />
+            <Users className="w-4 h-4 text-blue-400" />
             <span>Organizational Experience</span>
           </h5>
           <div className="space-y-3">
             {experienceData
               .filter((e) => e.type === 'Organisasi')
               .map((item) => (
-                <div key={item.id} className="p-4 rounded-xl bg-zinc-900/40 border border-white/5 space-y-2">
+                <div key={item.id} className="p-4 rounded-xl bg-zinc-900/80 border border-white/5 space-y-2">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <div>
                       <div className="font-bold text-white text-sm">{item.organization}</div>
-                      <div className="text-xs text-violet-300 font-medium">{item.role}</div>
+                      <div className="text-xs text-blue-300 font-medium">{item.role}</div>
                     </div>
                     <div className="text-xs font-mono text-zinc-400 sm:text-right shrink-0">
                       <div>{item.period}</div>
@@ -202,7 +202,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
                     <div className="space-y-1 pl-1">
                       {item.bullets.map((b, bIdx) => (
                         <div key={bIdx} className="flex items-start gap-2 text-xs text-zinc-300 leading-relaxed">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-violet-400 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
                           <span>{b}</span>
                         </div>
                       ))}
@@ -221,7 +221,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
           </h5>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {competitionsData.map((comp) => (
-              <div key={comp.id} className="p-3.5 rounded-xl bg-zinc-900/40 border border-white/5 space-y-1">
+              <div key={comp.id} className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/5 space-y-1">
                 <div className="flex justify-between items-start gap-2">
                   <span className="font-bold text-white text-xs">{comp.title}</span>
                   <span
@@ -251,7 +251,7 @@ export function CVModal({ isOpen, onClose }: CVModalProps) {
           </h5>
           <div className="space-y-2">
             {certificationsData.map((cert) => (
-              <div key={cert.id} className="p-3.5 rounded-xl bg-zinc-900/40 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+              <div key={cert.id} className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
                 <div>
                   <div className="font-semibold text-white">{cert.title}</div>
                   <div className="text-xs text-zinc-400">{cert.issuer}</div>

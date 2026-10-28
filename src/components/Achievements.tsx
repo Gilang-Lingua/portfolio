@@ -1,15 +1,22 @@
 import { Trophy, Scroll, CheckCircle } from 'lucide-react'
 import { competitionsData, certificationsData } from '../data/portfolioData'
+import { useReveal } from '../hooks/useGsap'
 
 export function Achievements() {
+  const revealRef = useReveal({
+    childSelector: '[data-gsap="reveal"]',
+    stagger: 0.1,
+    y: 18,
+  })
+
   const finalists = competitionsData.filter((c) => c.status === 'Finalist')
   const participants = competitionsData.filter((c) => c.status === 'Participant')
 
   return (
-    <section id="achievements" className="py-16 relative bg-zinc-950/40">
+    <section ref={revealRef} id="achievements" className="py-16 relative">
       <div className="content-container">
         {/* Section Header */}
-        <div className="text-left space-y-2 mb-10">
+        <div data-gsap="reveal" className="text-left space-y-2 mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Pencapaian & Sertifikasi
           </h2>
@@ -34,7 +41,8 @@ export function Achievements() {
               {finalists.map((item) => (
                 <div
                   key={item.id}
-                  className="p-4 rounded-xl bg-gradient-to-r from-amber-950/20 to-zinc-900/60 border border-amber-500/30 flex items-start justify-between gap-3"
+                  data-gsap="reveal"
+                  className="p-4 rounded-xl bg-zinc-900/80 border border-amber-500/30 flex items-start justify-between gap-3"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -61,7 +69,8 @@ export function Achievements() {
                 {participants.map((item) => (
                   <div
                     key={item.id}
-                    className="p-3.5 rounded-xl bg-zinc-900/50 border border-white/5 hover:border-white/15 flex items-center justify-between gap-3 transition-colors"
+                    data-gsap="reveal"
+                    className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/5 hover:border-white/15 flex items-center justify-between gap-3 transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
                       <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
@@ -90,7 +99,8 @@ export function Achievements() {
               {certificationsData.map((cert) => (
                 <div
                   key={cert.id}
-                  className="p-4 rounded-xl bg-zinc-900/50 border border-white/5 hover:border-white/15 transition-colors space-y-1"
+                  data-gsap="reveal"
+                  className="p-4 rounded-xl bg-zinc-900/80 border border-white/5 hover:border-white/15 transition-colors space-y-1"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <h4 className="text-xs sm:text-sm font-semibold text-white leading-snug">

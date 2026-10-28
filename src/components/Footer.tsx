@@ -6,7 +6,7 @@ export function Footer() {
   const { scrollTo } = useLenis()
 
   return (
-    <footer className="relative border-t border-white/10 bg-zinc-950/80 pt-12 pb-10 text-left">
+    <footer className="relative border-t border-white/10 pt-12 pb-10 text-left">
       <div className="content-container">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-8 border-b border-white/5">
           <div className="space-y-1">

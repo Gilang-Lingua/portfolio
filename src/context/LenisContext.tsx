@@ -1,5 +1,9 @@
 import { createContext, useContext, useEffect, useState, useRef, type ReactNode } from 'react'
 import Lenis from 'lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface LenisContextType {
   lenis: Lenis | null
@@ -25,6 +29,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   const [activeSection, setActiveSection] = useState('hero')
   const [isScrolled, setIsScrolled] = useState(false)
   const reqIdRef = useRef<number | null>(null)
+  const refreshFrameRef = useRef<number | null>(null)
 
   useEffect(() => {
     // Initialize Lenis with smooth modern easing
@@ -36,6 +41,10 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     })
 
     setLenisInstance(lenis)
+
+    // Sync GSAP ScrollTrigger with Lenis — crucial for accurate trigger positions
+    lenis.on('scroll', () => ScrollTrigger.update())
+    refreshFrameRef.current = requestAnimationFrame(() => ScrollTrigger.refresh())
 
     // Animation frame loop
     function raf(time: number) {
@@ -86,6 +95,9 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     return () => {
       if (reqIdRef.current) {
         cancelAnimationFrame(reqIdRef.current)
+      }
+      if (refreshFrameRef.current) {
+        cancelAnimationFrame(refreshFrameRef.current)
       }
       document.removeEventListener('click', handleAnchorClick)
       lenis.destroy()

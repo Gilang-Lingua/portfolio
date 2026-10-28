@@ -19,7 +19,7 @@ const TYPING_WORDS = ['Gemilang Ananda Lingua', 'Gilang']
 export function Hero({ onOpenCV }: HeroProps) {
   const { scrollTo } = useLenis()
   const [wordIndex, setWordIndex] = useState(0)
-  const [displayText, setDisplayText] = useState('')
+  const [displayText, setDisplayText] = useState(TYPING_WORDS[0])
   const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
@@ -32,23 +32,19 @@ export function Hero({ onOpenCV }: HeroProps) {
           setDisplayText(currentWord.slice(0, displayText.length + 1))
         }, 95)
       } else {
-        // Pause after full typing before backspacing
         timer = setTimeout(() => {
           setIsDeleting(true)
         }, 2000)
       }
+    } else if (displayText.length > 0) {
+      timer = setTimeout(() => {
+        setDisplayText(currentWord.slice(0, displayText.length - 1))
+      }, 55)
     } else {
-      if (displayText.length > 0) {
-        timer = setTimeout(() => {
-          setDisplayText(currentWord.slice(0, displayText.length - 1))
-        }, 55)
-      } else {
-        // Pause briefly after deletion before typing next name
-        timer = setTimeout(() => {
-          setIsDeleting(false)
-          setWordIndex((prev) => (prev + 1) % TYPING_WORDS.length)
-        }, 300)
-      }
+      timer = setTimeout(() => {
+        setIsDeleting(false)
+        setWordIndex((prev) => (prev + 1) % TYPING_WORDS.length)
+      }, 300)
     }
 
     return () => clearTimeout(timer)
@@ -60,7 +56,9 @@ export function Hero({ onOpenCV }: HeroProps) {
       className="relative min-h-[82vh] flex items-center justify-center pt-28 pb-16 overflow-hidden"
     >
       {/* Subtle ambient background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-cyan-600/10 rounded-full blur-[130px] pointer-events-none -z-10" />
+      <div
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-cyan-600/10 rounded-full blur-[130px] pointer-events-none -z-10"
+      />
 
       <div className="content-container w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -74,7 +72,7 @@ export function Hero({ onOpenCV }: HeroProps) {
             <div className="space-y-2">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight min-h-[2.4em] sm:min-h-[1.9em] lg:min-h-[1.3em]">
                 Halo, saya{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-300">
                   {displayText}
                 </span>
                 <span
@@ -124,65 +122,69 @@ export function Hero({ onOpenCV }: HeroProps) {
 
           {/* Right Column: Clean Profile Card */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-sm rounded-2xl bg-zinc-900/70 border border-white/10 p-6 shadow-xl backdrop-blur-md space-y-5 text-left">
-              <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-lg">
-                  GL
-                </div>
-                <div>
-                  <h2 className="text-base font-bold text-white leading-snug">{personalInfo.fullName}</h2>
-                  <div className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3 h-3 text-cyan-400 shrink-0" />
-                    <span>{personalInfo.location}</span>
+            <div className="w-full max-w-sm">
+              <div
+                className="rounded-2xl bg-zinc-900/80 border border-white/10 p-6 shadow-xl backdrop-blur-md space-y-5 text-left"
+              >
+                <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-lg">
+                    GL
+                  </div>
+                  <div>
+                    <h2 className="text-base font-bold text-white leading-snug">{personalInfo.fullName}</h2>
+                    <div className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
+                      <MapPin className="w-3 h-3 text-cyan-400 shrink-0" />
+                      <span>{personalInfo.location}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Focus Areas */}
-              <div className="space-y-2">
-                <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">Peminatan Utama</div>
-                <div className="flex flex-wrap gap-1.5">
-                  <span className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-cyan-300 border border-white/5">
-                    Cyber Security (CTF)
-                  </span>
-                  <span className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-indigo-300 border border-white/5">
-                    Data Science
-                  </span>
-                  <span className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-violet-300 border border-white/5">
-                    Artificial Intelligence
-                  </span>
+                {/* Focus Areas */}
+                <div className="space-y-2">
+                  <div className="text-xs font-mono uppercase tracking-wider text-zinc-400">Peminatan Utama</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-cyan-300 border border-white/5">
+                      Cyber Security (CTF)
+                    </span>
+                    <span className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-blue-300 border border-white/5">
+                      Data Science
+                    </span>
+                    <span className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-sky-300 border border-white/5">
+                      Artificial Intelligence
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Direct Channels */}
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
-                <span className="text-zinc-400">Hubungi langsung:</span>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={personalInfo.phoneUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-emerald-400 transition-colors"
-                    title="WhatsApp"
-                  >
-                    WA
-                  </a>
-                  <a
-                    href={personalInfo.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-cyan-400 transition-colors"
-                    title="LinkedIn"
-                  >
-                    <LinkedinIcon className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={`mailto:${personalInfo.email}`}
-                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors"
-                    title="Email"
-                  >
-                    <Mail className="w-4 h-4" />
-                  </a>
+                {/* Direct Channels */}
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
+                  <span className="text-zinc-400">Hubungi langsung:</span>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={personalInfo.phoneUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-emerald-400 transition-colors"
+                      title="WhatsApp"
+                    >
+                      WA
+                    </a>
+                    <a
+                      href={personalInfo.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-cyan-400 transition-colors"
+                      title="LinkedIn"
+                    >
+                      <LinkedinIcon className="w-4 h-4" />
+                    </a>
+                    <a
+                      href={`mailto:${personalInfo.email}`}
+                      className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors"
+                      title="Email"
+                    >
+                      <Mail className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

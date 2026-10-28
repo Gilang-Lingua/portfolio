@@ -1,11 +1,18 @@
 import { skillGroups } from '../data/portfolioData'
+import { useReveal } from '../hooks/useGsap'
 
 export function Skills() {
+  const revealRef = useReveal({
+    childSelector: '[data-gsap="reveal"]',
+    stagger: 0.12,
+    y: 18,
+  })
+
   return (
-    <section id="skills" className="py-16 relative bg-zinc-950/40">
+    <section ref={revealRef} id="skills" className="py-16 relative">
       <div className="content-container">
         {/* Section Header */}
-        <div className="text-left space-y-2 mb-10">
+        <div data-gsap="reveal" className="text-left space-y-2 mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Minat & Keahlian Teknis
           </h2>
@@ -15,11 +22,12 @@ export function Skills() {
         </div>
 
         {/* Skill Groups Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
           {skillGroups.map((group, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-zinc-900/60 border border-white/5 hover:border-white/10 transition-colors space-y-3"
+              data-gsap="reveal"
+              className="p-5 rounded-2xl bg-zinc-900/80 border border-white/5 hover:border-white/10 transition-colors space-y-3"
             >
               <div>
                 <h3 className="text-base font-bold text-white">{group.category}</h3>

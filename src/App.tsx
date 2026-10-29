@@ -13,11 +13,9 @@ import { Projects } from './components/Projects'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { FloatingActions } from './components/FloatingActions'
-import { CVModal } from './components/CVModal'
 import { InteractiveBackground } from './components/InteractiveBackground'
 
 export function App() {
-  const [isCVOpen, setIsCVOpen] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => (
     window.localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark'
   ))
@@ -117,7 +115,7 @@ export function App() {
 
         {/* Main Sections */}
         <main className="relative z-10 flex-1">
-          <Hero onOpenCV={() => setIsCVOpen(true)} />
+          <Hero />
           <About />
           <Skills />
           <Experience />
@@ -131,9 +129,6 @@ export function App() {
 
         {/* Floating Quick Navigation */}
         <FloatingActions />
-
-        {/* Resume Modal */}
-        <CVModal isOpen={isCVOpen} onClose={() => setIsCVOpen(false)} />
 
         {themeReveal && (
           <div

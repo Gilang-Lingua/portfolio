@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import {
-  FileText,
   Mail,
   MapPin,
   GraduationCap,
@@ -10,13 +9,9 @@ import { personalInfo } from '../data/portfolioData'
 import { useLenis } from '../context/LenisContext'
 import { LinkedinIcon } from './Icons'
 
-interface HeroProps {
-  onOpenCV: () => void
-}
-
 const TYPING_WORDS = ['Gemilang Ananda Lingua', 'Gilang']
 
-export function Hero({ onOpenCV }: HeroProps) {
+export function Hero() {
   const { scrollTo } = useLenis()
   const [wordIndex, setWordIndex] = useState(0)
   const [displayText, setDisplayText] = useState(TYPING_WORDS[0])
@@ -100,14 +95,6 @@ export function Hero({ onOpenCV }: HeroProps) {
               >
                 <span>Tentang Saya</span>
                 <ArrowDown className="w-3.5 h-3.5" />
-              </button>
-
-              <button
-                onClick={onOpenCV}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:text-white border border-white/10 font-medium text-xs transition-colors"
-              >
-                <FileText className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Lihat CV Lengkap</span>
               </button>
 
               <button

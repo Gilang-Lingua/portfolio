@@ -5,7 +5,6 @@ import { useReveal } from '../hooks/useGsap'
 export function Achievements() {
   const revealRef = useReveal({
     childSelector: '[data-gsap="reveal"]',
-    stagger: 0.1,
     y: 18,
   })
 
@@ -13,47 +12,47 @@ export function Achievements() {
   const participants = competitionsData.filter((c) => c.status === 'Participant')
 
   return (
-    <section ref={revealRef} id="achievements" className="py-16 relative">
+    <section ref={revealRef} id="achievements" className="relative py-2">
       <div className="content-container">
         {/* Section Header */}
-        <div data-gsap="reveal" className="text-left space-y-2 mb-10">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <div data-gsap="reveal" className="mb-3 space-y-1 text-left">
+          <h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
             Pencapaian & Sertifikasi
           </h2>
-          <p className="text-zinc-400 text-sm">
+          <p className="text-[10px] text-zinc-400 sm:text-xs">
             Catatan keikutsertaan kompetisi keamanan siber serta pelatihan kepemimpinan resmi.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left items-start">
+        <div className="grid grid-cols-1 items-start gap-3 text-left lg:grid-cols-12">
           {/* Left Column: Pencapaian Kompetisi (CTF) */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="flex items-center gap-2 text-white font-bold text-base pb-1 border-b border-white/10">
-              <Trophy className="w-4 h-4 text-amber-400" />
+          <div className="space-y-2 lg:col-span-7">
+            <div className="flex items-center gap-2 border-b border-white/10 pb-1 text-sm font-bold text-white">
+              <Trophy className="h-3.5 w-3.5 text-amber-400" />
               <span>Pencapaian Kompetisi (Capture The Flag)</span>
             </div>
 
             {/* Finalist Group */}
-            <div className="space-y-2">
-              <div className="text-xs font-mono uppercase tracking-wider text-amber-400/90 font-semibold">
+            <div className="space-y-1">
+              <div className="text-[10px] font-mono font-semibold uppercase tracking-wider text-amber-400/90">
                 ★ Finalis
               </div>
               {finalists.map((item) => (
                 <div
                   key={item.id}
                   data-gsap="reveal"
-                  className="p-4 rounded-xl bg-zinc-900/80 border border-amber-500/30 flex items-start justify-between gap-3"
+                  className="flex items-start justify-between gap-2 rounded-lg border border-amber-500/30 bg-zinc-900/80 p-2"
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-1.5">
+                      <span className="rounded border border-amber-500/40 bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold text-amber-300">
                         Finalist
                       </span>
-                      <h4 className="text-sm font-bold text-white">{item.title}</h4>
+                      <h4 className="text-[10px] font-bold text-white">{item.title}</h4>
                     </div>
-                    <div className="text-xs text-zinc-300">{item.event}</div>
+                    <div className="text-[10px] text-zinc-300">{item.event}</div>
                   </div>
-                  <span className="text-xs font-mono text-amber-400 shrink-0 font-semibold">
+                  <span className="shrink-0 text-[10px] font-mono font-semibold text-amber-400">
                     {item.year}
                   </span>
                 </div>
@@ -61,25 +60,25 @@ export function Achievements() {
             </div>
 
             {/* Participants Group */}
-            <div className="space-y-2 pt-2">
-              <div className="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">
+            <div className="space-y-1 pt-1">
+              <div className="text-[10px] font-mono font-semibold uppercase tracking-wider text-zinc-400">
                 Peserta Kompetisi
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {participants.map((item) => (
                   <div
                     key={item.id}
                     data-gsap="reveal"
-                    className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/5 hover:border-white/15 flex items-center justify-between gap-3 transition-colors"
+                    className="flex items-center justify-between gap-2 rounded-lg border border-white/5 bg-zinc-900/80 p-2 transition-colors hover:border-white/15"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
                       <div>
-                        <div className="text-xs font-semibold text-white">{item.title}</div>
-                        <div className="text-xs text-zinc-400">{item.event}</div>
+                        <div className="text-[10px] font-semibold text-white">{item.title}</div>
+                        <div className="text-[10px] text-zinc-400">{item.event}</div>
                       </div>
                     </div>
-                    <span className="text-xs font-mono text-zinc-400 shrink-0">
+                    <span className="shrink-0 text-[10px] font-mono text-zinc-400">
                       {item.year}
                     </span>
                   </div>
@@ -89,28 +88,28 @@ export function Achievements() {
           </div>
 
           {/* Right Column: Sertifikasi & Pelatihan */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="flex items-center gap-2 text-white font-bold text-base pb-1 border-b border-white/10">
-              <Scroll className="w-4 h-4 text-cyan-400" />
+          <div className="space-y-2 lg:col-span-5">
+            <div className="flex items-center gap-2 border-b border-white/10 pb-1 text-sm font-bold text-white">
+              <Scroll className="h-3.5 w-3.5 text-cyan-400" />
               <span>Sertifikasi & Pelatihan</span>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-1">
               {certificationsData.map((cert) => (
                 <div
                   key={cert.id}
                   data-gsap="reveal"
-                  className="p-4 rounded-xl bg-zinc-900/80 border border-white/5 hover:border-white/15 transition-colors space-y-1"
+                  className="space-y-0.5 rounded-lg border border-white/5 bg-zinc-900/80 p-2 transition-colors hover:border-white/15"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <h4 className="text-xs sm:text-sm font-semibold text-white leading-snug">
+                    <h4 className="text-[10px] font-semibold leading-snug text-white sm:text-xs">
                       {cert.title}
                     </h4>
-                    <span className="text-xs font-mono text-cyan-400 shrink-0">
+                    <span className="shrink-0 text-[10px] font-mono text-cyan-400">
                       {cert.year}
                     </span>
                   </div>
-                  <div className="text-xs text-zinc-400">{cert.issuer}</div>
+                  <div className="text-[10px] leading-tight text-zinc-400">{cert.issuer}</div>
                 </div>
               ))}
             </div>

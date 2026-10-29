@@ -49,3 +49,4 @@ Anda dapat dengan mudah mengubah:
 - **Daftar Proyek**: Masukkan tautan repo asli, demo live, screenshot, dan deskripsi pada array `projectsData`.
 - **Pengalaman**: Sesuaikan pengalaman magang atau kepanitiaan di array `experienceData`.
 
+Bagian **Portofolio** menyatukan tab Minat & Skill, Pengalaman, Pencapaian, dan Eksplorasi. Judul dan deskripsi setiap bagian tetap ditampilkan pada tab masing-masing; pengalaman juga memiliki filter Semua, Kepanitiaan, dan Organisasi.

@@ -7,9 +7,7 @@ import type { MouseEvent } from 'react'
 const navItems = [
   { id: 'hero', label: 'Beranda' },
   { id: 'about', label: 'Tentang' },
-  { id: 'skills', label: 'Minat & Skill' },
-  { id: 'experience', label: 'Pengalaman' },
-  { id: 'achievements', label: 'Pencapaian' },
+  { id: 'portfolio', label: 'Portofolio' },
   { id: 'contact', label: 'Kontak' },
 ]
 
@@ -81,20 +79,20 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
     <header
       className={`fixed left-0 right-0 z-40 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         isScrolled
-          ? 'top-7 py-2'
-          : 'top-8 bg-transparent py-5'
+          ? 'top-4 py-1'
+          : 'top-5 bg-transparent py-2'
       }`}
     >
       <div className="content-container relative flex items-center justify-between">
         {/* Desktop Nav Items */}
         <div
-          className={`hidden md:flex absolute left-1/2 -translate-x-1/2 origin-top transform-gpu items-center gap-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isScrolled ? 'scale-[0.96]' : 'scale-100'
+          className={`hidden md:flex absolute left-1/2 -translate-x-1/2 origin-top transform-gpu items-center gap-2 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            isScrolled ? 'scale-[0.94]' : 'scale-[0.98]'
           }`}
         >
           <nav
             ref={navRef}
-            className="navbar-glass relative flex w-max items-center gap-1 rounded-full bg-zinc-900/60 border border-white/5 p-1.5 backdrop-blur-md"
+            className="navbar-glass relative flex w-max items-center gap-0.5 rounded-full bg-zinc-900/60 border border-white/5 p-1 backdrop-blur-md"
           >
             <span
               ref={activeIndicatorRef}
@@ -108,7 +106,7 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
                   key={item.id}
                   data-nav-id={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  className={`relative z-10 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors duration-200 ${
                     isActive
                       ? 'text-blue-300'
                       : 'text-zinc-400 hover:text-white'
@@ -121,12 +119,12 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
           </nav>
           <button
             onClick={onToggleTheme}
-            className="navbar-glass flex h-11 w-11 items-center justify-center rounded-full bg-zinc-900/60 text-amber-400 backdrop-blur-md transition-colors hover:bg-zinc-800 border border-white/5"
+            className="navbar-glass flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900/60 text-amber-400 backdrop-blur-md transition-colors hover:bg-zinc-800 border border-white/5"
             title={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-label={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-pressed={theme === 'light'}
           >
-            <Lightbulb className="h-5 w-5" />
+            <Lightbulb className="h-4 w-4" />
           </button>
         </div>
 
@@ -135,18 +133,18 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
           <button
             onClick={onToggleTheme}
             className={`navbar-glass rounded-full bg-zinc-900/60 border border-white/5 text-amber-400 backdrop-blur-md focus:outline-none flex items-center justify-center transition-all duration-300 ${
-              isScrolled ? 'h-10 w-10' : 'h-12 w-12'
+              isScrolled ? 'h-9 w-9' : 'h-10 w-10'
             }`}
             title={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-label={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-pressed={theme === 'light'}
           >
-            <Lightbulb className={isScrolled ? 'h-5 w-5' : 'h-6 w-6'} />
+            <Lightbulb className="h-5 w-5" />
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`navbar-glass rounded-lg bg-zinc-900/80 border border-white/10 text-zinc-300 hover:text-white focus:outline-none transition-all duration-300 ${
-              isScrolled ? 'p-2' : 'p-2.5'
+              isScrolled ? 'p-1.5' : 'p-2'
             }`}
             aria-label="Toggle Menu"
           >

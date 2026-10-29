@@ -19,13 +19,12 @@ export function syncGsapWithLenis(lenisInstance: { on: (event: string, cb: (e: {
 }
 
 /**
- * Generic hook: fade + slide up on scroll-enter, with optional stagger for children.
+ * Reveal children in DOM order and reverse the sequence when they leave the viewport.
  * Returns a ref to attach to the container element.
  */
 export function useReveal<T extends HTMLElement = HTMLElement>(options?: {
   y?: number
   duration?: number
-  stagger?: number
   delay?: number
   childSelector?: string
   refreshKey?: string | number
@@ -34,7 +33,6 @@ export function useReveal<T extends HTMLElement = HTMLElement>(options?: {
   const {
     y = 40,
     duration = 0.8,
-    stagger = 0.1,
     delay = 0,
     childSelector,
     refreshKey,
@@ -50,56 +48,49 @@ export function useReveal<T extends HTMLElement = HTMLElement>(options?: {
     if (!targets.length) return
 
     const ctx = gsap.context(() => {
-      gsap.set(targets, { opacity: 0, y })
+      const animationDuration = Math.min(duration, 0.45)
+      gsap.set(targets, { autoAlpha: 0, y })
 
-      ScrollTrigger.batch(targets, {
-        start: 'top 88%',
-        end: 'bottom 12%',
-        onEnter: (batch) => {
-          gsap.to(batch, {
-            opacity: 1,
-            y: 0,
-            duration,
-            delay,
-            stagger,
-            ease: 'power3.out',
-            overwrite: 'auto',
-          })
-        },
-        onEnterBack: (batch) => {
-          gsap.to(batch, {
-            opacity: 1,
-            y: 0,
-            duration,
-            delay,
-            stagger,
-            ease: 'power3.out',
-            overwrite: 'auto',
-          })
-        },
-        onLeave: (batch) => {
-          gsap.to(batch, {
-            opacity: 0,
-            y: -y,
-            duration: Math.min(duration, 0.35),
-            ease: 'power2.in',
-            overwrite: 'auto',
-          })
-        },
-        onLeaveBack: (batch) => {
-          gsap.to(batch, {
-            opacity: 0,
-            y,
-            duration: Math.min(duration, 0.35),
-            ease: 'power2.in',
-            overwrite: 'auto',
-          })
-        },
+      const revealFrom = (startY: number) => {
+        gsap.set(targets, { autoAlpha: 0, y: startY })
+        gsap.to(targets, {
+          autoAlpha: 1,
+          y: 0,
+          duration: animationDuration,
+          delay,
+          ease: 'power3.out',
+          overwrite: 'auto',
+        })
+      }
+
+      const hideToward = (endY: number) => {
+        gsap.to(targets, {
+          autoAlpha: 0,
+          y: endY,
+          duration: animationDuration,
+          ease: 'power2.in',
+          overwrite: 'auto',
+        })
+      }
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 72%',
+        end: 'bottom 28%',
+        onEnter: () => revealFrom(y),
+        onLeave: () => hideToward(-y),
+        onEnterBack: () => revealFrom(-y),
+        onLeaveBack: () => hideToward(y),
       })
     }, el)
 
-    return () => ctx.revert()
-  }, [childSelector, delay, duration, refreshKey, stagger, y])
+    const refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh())
+
+    return () => {
+      cancelAnimationFrame(refreshFrame)
+      ctx.revert()
+    }
+  }, [childSelector, delay, duration, refreshKey, y])
 
   return ref as React.RefObject<T>
 }

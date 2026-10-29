@@ -56,7 +56,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[82vh] flex items-center justify-center pt-28 pb-16"
+      className="relative min-h-[82vh] flex items-center justify-center pb-16 pt-0 lg:pt-28"
     >
       {/* Subtle ambient background glow */}
       <div
@@ -90,7 +90,31 @@ export function Hero() {
       )}
 
       <div className="content-container relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10">
+          {/* Mobile Lanyard */}
+          {!isDesktop && (
+            <div className="flex justify-center lg:hidden">
+              <div className="h-[min(72vh,620px)] w-full max-w-[480px]">
+                <Suspense fallback={<div className="h-full w-full rounded-3xl bg-gradient-to-br from-white/5 to-transparent" aria-hidden="true" />}>
+                  <Lanyard
+                    frontImage="/lanyard-front.png"
+                    backImage="/lanyard-back.png"
+                    strapImage="/lanyard-strap.png"
+                    cardColor="#ffffff"
+                    strapColor="#090b10"
+                    finish="glossy"
+                    metal="silver"
+                    strapWidth={0.75}
+                    size={0.68}
+                    strapLength={0.62}
+                    breeze={0}
+                    damping={0.65}
+                  />
+                </Suspense>
+              </div>
+            </div>
+          )}
+
           {/* Left Column: Introduction */}
           <div className="lg:col-span-7 flex flex-col items-start text-left space-y-5">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs text-zinc-300">
@@ -141,29 +165,6 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Mobile Lanyard */}
-          {!isDesktop && (
-            <div className="flex justify-center lg:hidden">
-              <div className="h-[340px] w-full max-w-[360px]">
-                <Suspense fallback={<div className="h-full w-full rounded-3xl bg-gradient-to-br from-white/5 to-transparent" aria-hidden="true" />}>
-                  <Lanyard
-                    frontImage="/lanyard-front.png"
-                    backImage="/lanyard-back.png"
-                    strapImage="/lanyard-strap.png"
-                    cardColor="#ffffff"
-                    strapColor="#090b10"
-                    finish="glossy"
-                    metal="silver"
-                    strapWidth={0.75}
-                    size={0.42}
-                    strapLength={0.3}
-                    breeze={0}
-                    damping={0.65}
-                  />
-                </Suspense>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>

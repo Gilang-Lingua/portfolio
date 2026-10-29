@@ -6,12 +6,11 @@ import { useReveal } from '../hooks/useGsap'
 export function Projects() {
   const revealRef = useReveal({
     childSelector: '[data-gsap="reveal"]',
-    stagger: 0.12,
     y: 18,
   })
 
   return (
-    <section ref={revealRef} id="projects" className="py-16 relative">
+    <section ref={revealRef} id="exploration" className="py-5 relative">
       <div className="content-container">
         {/* Section Header */}
         <div data-gsap="reveal" className="text-left space-y-2 mb-10">
@@ -29,7 +28,7 @@ export function Projects() {
             <div
               key={project.id}
               data-gsap="reveal"
-              className="p-5 rounded-2xl bg-zinc-900/80 border border-white/5 hover:border-white/15 transition-all flex flex-col justify-between space-y-4"
+              className="p-5 rounded-2xl bg-zinc-900/80 border border-white/5 hover:border-white/15 transition-colors flex flex-col justify-between space-y-4"
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">

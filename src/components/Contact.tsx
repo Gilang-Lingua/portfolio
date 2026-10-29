@@ -8,7 +8,6 @@ export function Contact() {
   const [copied, setCopied] = useState(false)
   const revealRef = useReveal({
     childSelector: '[data-gsap="reveal"]',
-    stagger: 0.1,
     y: 18,
   })
 

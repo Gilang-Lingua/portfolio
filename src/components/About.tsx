@@ -39,7 +39,6 @@ const domains = [
 export function About() {
   const revealRef = useReveal({
     childSelector: '[data-gsap="reveal"]',
-    stagger: 0.1,
     y: 18,
   })
 

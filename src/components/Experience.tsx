@@ -19,12 +19,8 @@ export function Experience() {
   const filterRef = useRef<HTMLDivElement>(null)
   const filterIndicatorRef = useRef<HTMLSpanElement>(null)
   const hasPositionedFilter = useRef(false)
-  const headerRevealRef = useReveal<HTMLDivElement>({
-    y: 18,
-  })
-  const timelineRevealRef = useReveal<HTMLDivElement>({
+  const revealRef = useReveal<HTMLElement>({
     childSelector: '[data-gsap="reveal"]',
-    stagger: 0.1,
     y: 18,
     refreshKey: activeTab,
   })
@@ -82,15 +78,15 @@ export function Experience() {
   }, [activeTab])
 
   return (
-    <section id="experience" className="py-16 relative">
+    <section ref={revealRef} id="experience" className="relative py-2">
       <div className="content-container">
         {/* Section Header */}
-        <div ref={headerRevealRef} className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 text-left">
-          <div className="space-y-1">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <div data-gsap="reveal" className="mb-3 flex flex-col justify-between gap-2 text-left sm:flex-row sm:items-end">
+          <div className="space-y-0.5">
+            <h2 className="text-lg font-extrabold tracking-tight text-white sm:text-xl">
               Kepanitiaan & Organisasi
             </h2>
-            <p className="text-zinc-400 text-sm">
+            <p className="text-[10px] text-zinc-400 sm:text-xs">
               Aktivitas dan rekam jejak peran di kepanitiaan serta organisasi kampus ITS.
             </p>
           </div>
@@ -98,7 +94,7 @@ export function Experience() {
           {/* Filter Tabs */}
           <div
             ref={filterRef}
-            className="relative flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5 backdrop-blur-md self-start sm:self-auto"
+            className="relative flex items-center gap-0.5 p-1 rounded-full bg-zinc-900/60 border border-white/5 backdrop-blur-md self-start sm:self-auto"
           >
             <span
               ref={filterIndicatorRef}
@@ -110,7 +106,7 @@ export function Experience() {
                 key={tab.id}
                 data-filter-id={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 ${
+                className={`relative z-10 px-3 py-1 rounded-full text-[11px] font-medium transition-colors duration-200 ${
                   activeTab === tab.id
                     ? 'text-blue-300'
                     : 'text-zinc-400 hover:text-white'
@@ -123,47 +119,46 @@ export function Experience() {
         </div>
 
         {/* Timeline Container */}
-        <div ref={timelineRevealRef} className="relative border-l border-white/10 ml-3 sm:ml-4 space-y-8 pl-5 sm:pl-7 text-left">
+        <div className="grid grid-cols-1 gap-2 text-left lg:grid-cols-2">
           {filteredExperience.map((item) => (
-            <div key={item.id} data-gsap="reveal" className="relative group">
-              {/* Timeline Point */}
-              <div className="timeline-point absolute top-1.5 w-5 h-5 rounded-full bg-[#090a0f] border-2 border-cyan-400 shadow-sm" />
-
+            <div key={item.id} data-gsap="reveal" className="group">
               {/* Card */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900/80 border border-white/5 hover:border-white/15 transition-all space-y-3">
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-mono px-2 py-0.5 rounded bg-zinc-800 text-cyan-300 border border-white/5">
+              <div className="space-y-1 rounded-lg border border-white/5 bg-zinc-900/80 p-2.5 transition-all hover:border-white/15">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 space-y-0.5">
+                    <span className="rounded border border-white/5 bg-zinc-800 px-1.5 py-0.5 text-[9px] font-mono text-cyan-300">
                       {item.type}
                     </span>
-                    <h3 className="text-base sm:text-lg font-bold text-white pt-1">
+                    <h3 className="pt-0.5 text-[11px] font-bold leading-tight text-white sm:text-xs">
                       {item.role}
                     </h3>
-                    <div className="text-xs text-zinc-300 font-medium">
+                    <div className="text-[10px] font-medium leading-tight text-zinc-300">
                       {item.organization}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 text-xs text-zinc-400 font-mono shrink-0">
+                  <div className="flex shrink-0 flex-col items-end gap-0.5 text-[9px] font-mono text-zinc-400">
                     <div className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5 text-zinc-400" />
+                      <Calendar className="h-2.5 w-2.5 text-zinc-400" />
                       <span>{item.period}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-zinc-400" />
+                      <MapPin className="h-2.5 w-2.5 text-zinc-400" />
                       <span>{item.location}</span>
                     </div>
                   </div>
                 </div>
 
                 {item.bullets && item.bullets.length > 0 && (
-                  <div className="space-y-1.5 pt-1 border-t border-white/5">
-                    {item.bullets.map((bullet, bIdx) => (
-                      <div key={bIdx} className="flex items-start gap-2 text-xs text-zinc-300 leading-relaxed">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                        <span>{bullet}</span>
-                      </div>
-                    ))}
+                  <div className="border-t border-white/5 pt-1">
+                    <div className="space-y-0.5 text-[9px] leading-snug text-zinc-300">
+                      {item.bullets.map((bullet, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-1.5">
+                          <CheckCircle2 className="mt-px h-2.5 w-2.5 shrink-0 text-cyan-400" />
+                          <span>{bullet}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

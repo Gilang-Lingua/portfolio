@@ -2,14 +2,10 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import gsap from 'gsap'
 import type { MouseEvent } from 'react'
 import { LenisProvider } from './context/LenisContext'
-import { ScrollProgress } from './components/ScrollProgress'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
-import { Skills } from './components/Skills'
-import { Experience } from './components/Experience'
-import { Achievements } from './components/Achievements'
-import { Projects } from './components/Projects'
+import { Portfolio } from './components/Portfolio'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { FloatingActions } from './components/FloatingActions'
@@ -125,9 +121,6 @@ export function App() {
         {/* Interactive dot grid behind page content */}
         <InteractiveBackground onReady={handleBackgroundReady} />
 
-        {/* Top Scroll Indicator */}
-        <ScrollProgress />
-
         {/* Global Navigation Bar */}
         <Navbar theme={theme} onToggleTheme={handleThemeToggle} />
 
@@ -135,10 +128,7 @@ export function App() {
         <main className="relative z-10 flex-1">
           <Hero />
           <About />
-          <Skills />
-          <Experience />
-          <Achievements />
-          <Projects />
+          <Portfolio />
           <Contact />
         </main>
 

@@ -2,13 +2,13 @@ import { createContext, useContext, useEffect, useState, useRef, type ReactNode 
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollProgressContext } from './ScrollProgressContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
 interface LenisContextType {
   lenis: Lenis | null
   scrollTo: (target: string | HTMLElement | number, options?: { offset?: number; duration?: number }) => void
-  scrollProgress: number
   activeSection: string
   isScrolled: boolean
 }
@@ -16,11 +16,9 @@ interface LenisContextType {
 const LenisContext = createContext<LenisContextType>({
   lenis: null,
   scrollTo: () => {},
-  scrollProgress: 0,
   activeSection: 'hero',
   isScrolled: false,
 })
-
 export const useLenis = () => useContext(LenisContext)
 
 export function LenisProvider({ children }: { children: ReactNode }) {
@@ -128,12 +126,13 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       value={{
         lenis: lenisInstance,
         scrollTo,
-        scrollProgress,
         activeSection,
         isScrolled,
       }}
     >
-      {children}
+      <ScrollProgressContext.Provider value={scrollProgress}>
+        {children}
+      </ScrollProgressContext.Provider>
     </LenisContext.Provider>
   )
 }

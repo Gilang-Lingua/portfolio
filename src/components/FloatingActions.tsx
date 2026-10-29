@@ -1,8 +1,10 @@
 import { ArrowUp } from 'lucide-react'
 import { useLenis } from '../context/LenisContext'
+import { useScrollProgress } from '../context/ScrollProgressContext'
 
 export function FloatingActions() {
-  const { scrollTo, isScrolled, scrollProgress } = useLenis()
+  const { scrollTo, isScrolled } = useLenis()
+  const scrollProgress = useScrollProgress()
 
   if (!isScrolled) return null
 

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useRef, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, useRef, type ReactNode } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -26,7 +26,6 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [activeSection, setActiveSection] = useState('hero')
   const [isScrolled, setIsScrolled] = useState(false)
-  const reqIdRef = useRef<number | null>(null)
   const refreshFrameRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -44,12 +43,9 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     lenis.on('scroll', () => ScrollTrigger.update())
     refreshFrameRef.current = requestAnimationFrame(() => ScrollTrigger.refresh())
 
-    // Animation frame loop
-    function raf(time: number) {
-      lenis.raf(time)
-      reqIdRef.current = requestAnimationFrame(raf)
-    }
-    reqIdRef.current = requestAnimationFrame(raf)
+    const raf = (time: number) => lenis.raf(time * 1000)
+    gsap.ticker.lagSmoothing(0)
+    gsap.ticker.add(raf)
 
     // Listen to scroll events
     const handleScroll = (e: { scroll: number; limit: number; progress: number }) => {
@@ -91,9 +87,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     document.addEventListener('click', handleAnchorClick)
 
     return () => {
-      if (reqIdRef.current) {
-        cancelAnimationFrame(reqIdRef.current)
-      }
+      gsap.ticker.remove(raf)
       if (refreshFrameRef.current) {
         cancelAnimationFrame(refreshFrameRef.current)
       }
@@ -102,7 +96,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const scrollTo = (target: string | HTMLElement | number, options?: { offset?: number; duration?: number }) => {
+  const scrollTo = useCallback((target: string | HTMLElement | number, options?: { offset?: number; duration?: number }) => {
     if (!lenisInstance) return
 
     if (typeof target === 'string') {
@@ -119,16 +113,18 @@ export function LenisProvider({ children }: { children: ReactNode }) {
         duration: options?.duration ?? 1.2,
       })
     }
-  }
+  }, [lenisInstance])
+
+  const lenisContextValue = useMemo(() => ({
+    lenis: lenisInstance,
+    scrollTo,
+    activeSection,
+    isScrolled,
+  }), [lenisInstance, scrollTo, activeSection, isScrolled])
 
   return (
     <LenisContext.Provider
-      value={{
-        lenis: lenisInstance,
-        scrollTo,
-        activeSection,
-        isScrolled,
-      }}
+      value={lenisContextValue}
     >
       <ScrollProgressContext.Provider value={scrollProgress}>
         {children}

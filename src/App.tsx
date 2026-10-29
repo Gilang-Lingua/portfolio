@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import type { MouseEvent } from 'react'
 import { LenisProvider } from './context/LenisContext'
@@ -16,6 +16,9 @@ import { FloatingActions } from './components/FloatingActions'
 import { InteractiveBackground } from './components/InteractiveBackground'
 
 export function App() {
+  const [backgroundReady, setBackgroundReady] = useState(false)
+  const [minimumLoadingElapsed, setMinimumLoadingElapsed] = useState(false)
+  const [isLoadingVisible, setIsLoadingVisible] = useState(true)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => (
     window.localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark'
   ))
@@ -27,6 +30,21 @@ export function App() {
   } | null>(null)
   const themeRevealRef = useRef<HTMLDivElement>(null)
   const isThemeAnimatingRef = useRef(false)
+  const handleBackgroundReady = useCallback(() => {
+    void document.fonts.ready.then(() => setBackgroundReady(true))
+  }, [])
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setMinimumLoadingElapsed(true), 10_000)
+    return () => window.clearTimeout(timeout)
+  }, [])
+
+  useEffect(() => {
+    if (!backgroundReady || !minimumLoadingElapsed) return
+
+    const timeout = window.setTimeout(() => setIsLoadingVisible(false), 500)
+    return () => window.clearTimeout(timeout)
+  }, [backgroundReady, minimumLoadingElapsed])
 
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -104,8 +122,8 @@ export function App() {
         data-theme={theme}
         className="relative min-h-screen bg-[#090a0f] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200"
       >
-        {/* Interactive Cursor-Revealed Background Grid */}
-        <InteractiveBackground />
+        {/* Interactive dot grid behind page content */}
+        <InteractiveBackground onReady={handleBackgroundReady} />
 
         {/* Top Scroll Indicator */}
         <ScrollProgress />
@@ -129,6 +147,18 @@ export function App() {
 
         {/* Floating Quick Navigation */}
         <FloatingActions />
+
+        {isLoadingVisible && (
+          <div
+            role="status"
+            aria-label="Memuat halaman"
+            className={`fixed inset-0 z-[90] flex items-center justify-center bg-[#090a0f] transition-opacity duration-500 ${
+              backgroundReady ? 'pointer-events-none opacity-0' : 'opacity-100'
+            }`}
+          >
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-cyan-400" />
+          </div>
+        )}
 
         {themeReveal && (
           <div

@@ -1,199 +1,214 @@
 import { useEffect, useRef } from 'react'
 
-interface TrailPoint {
+interface GridPoint {
   x: number
   y: number
-  alpha: number
-  radius: number
+  offsetX: number
+  offsetY: number
 }
 
-export function InteractiveBackground() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const revealGridRef = useRef<HTMLDivElement>(null)
+const GRID_SPACING = 32
+const INTERACTION_RADIUS = 150
+const MAX_DISPLACEMENT = 14
+
+interface InteractiveBackgroundProps {
+  onReady?: () => void
+}
+
+export function InteractiveBackground({ onReady }: InteractiveBackgroundProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    // Respect accessibility preference for reduced motion
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const canvas = canvasRef.current
+    const context = canvas?.getContext('2d')
+    if (!canvas || !context) return
 
-    if (prefersReducedMotion) {
-      return
-    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let rows: GridPoint[][] = []
+    let pointerX: number | null = null
+    let pointerY: number | null = null
+    let animationFrame: number | null = null
+    let frameDelay: number | null = null
+    let hasDrawnInitialFrame = false
+    const basePoints: number[] = []
+    const highlightedPoints: number[] = []
 
-    const revealEl = revealGridRef.current
-    if (!revealEl) return
+    const draw = () => {
+      animationFrame = null
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const isLightTheme = document.documentElement.dataset.theme === 'light'
+      const baseColor = isLightTheme ? '71, 85, 105' : '148, 163, 184'
+      const accentColor = isLightTheme ? '14, 165, 233' : '34, 211, 238'
+      const scrollY = window.scrollY
+      const firstRow = Math.max(0, Math.floor((scrollY - GRID_SPACING / 2) / GRID_SPACING) - 1)
+      const lastRow = Math.min(
+        rows.length,
+        Math.ceil((scrollY + height - GRID_SPACING / 2) / GRID_SPACING) + 2
+      )
+      let isAnimating = false
 
-    let mouseX = -1000
-    let mouseY = -1000
-    let headX = -1000
-    let headY = -1000
-    let lastDropX = -1000
-    let lastDropY = -1000
+      context.clearRect(0, 0, width, height)
+      basePoints.length = 0
+      highlightedPoints.length = 0
 
-    let currentOpacity = 0
-    let targetOpacity = 0
-    let rafId: number
-    let idleTimeout: ReturnType<typeof setTimeout> | null = null
+      for (let rowIndex = firstRow; rowIndex < lastRow; rowIndex += 1) {
+        for (const point of rows[rowIndex]) {
+          const pointY = point.y - scrollY
+          let targetX = 0
+          let targetY = 0
 
-    // Trail storage for fluid droplets
-    const trail: TrailPoint[] = []
-    const MAX_TRAIL_POINTS = 7
+          if (pointerX !== null && pointerY !== null && !reducedMotion) {
+            const dx = point.x - pointerX
+            const dy = pointY - pointerY
+            const distance = Math.hypot(dx, dy)
 
-    const handlePointerMove = (e: PointerEvent) => {
-      // Ignore touch gestures so mobile behavior remains clean
-      if (e.pointerType === 'touch') return
-
-      mouseX = e.clientX
-      mouseY = e.clientY
-      targetOpacity = 1
-
-      // If initial move, place head immediately
-      if (headX < -500) {
-        headX = mouseX
-        headY = mouseY
-        lastDropX = mouseX
-        lastDropY = mouseY
-      }
-
-      // Reset idle timer: fade back to dark after 2.5s without movement
-      if (idleTimeout) clearTimeout(idleTimeout)
-      idleTimeout = setTimeout(() => {
-        targetOpacity = 0
-      }, 2500)
-    }
-
-    const handlePointerLeave = () => {
-      targetOpacity = 0
-    }
-
-    const handlePointerEnter = (e: MouseEvent) => {
-      mouseX = e.clientX
-      mouseY = e.clientY
-      targetOpacity = 1
-    }
-
-    const render = (timestamp: number) => {
-      // Time variable for undulating liquid harmonics
-      const t = timestamp * 0.002
-
-      // 1. Smoothly interpolate head position towards mouse
-      headX += (mouseX - headX) * 0.18
-      headY += (mouseY - headY) * 0.18
-
-      // 2. Smoothly fade opacity in and out
-      currentOpacity += (targetOpacity - currentOpacity) * 0.06
-
-      // 3. Drop trailing fluid points when cursor moves sufficient distance
-      const dist = Math.hypot(headX - lastDropX, headY - lastDropY)
-      if (dist > 20 && targetOpacity > 0.3) {
-        trail.push({
-          x: headX,
-          y: headY,
-          alpha: 0.8,
-          radius: 280,
-        })
-        if (trail.length > MAX_TRAIL_POINTS) {
-          trail.shift()
-        }
-        lastDropX = headX
-        lastDropY = headY
-      }
-
-      // 4. Decay and prune trail droplets
-      for (let i = trail.length - 1; i >= 0; i--) {
-        trail[i].alpha *= 0.87
-        if (trail[i].alpha < 0.02) {
-          trail.splice(i, 1)
-        }
-      }
-
-      // 5. Build dynamic liquid mask with undulating organic harmonics (pure reveal, no glow)
-      if (currentOpacity > 0.01 && headX > -500) {
-        // Multi-node harmonic calculation for fluid/liquid amoeba boundary:
-        // Core breathing center
-        const r0 = 300 + Math.sin(t * 1.8) * 35
-        const x0 = headX + Math.cos(t * 1.3) * 35
-        const y0 = headY + Math.sin(t * 1.6) * 35
-
-        // Organic orbital bulges deforming the perimeter
-        const r1 = 260 + Math.cos(t * 2.1 + 1.2) * 35
-        const x1 = headX + Math.cos(t * 1.1 + 0.7) * 90
-        const y1 = headY + Math.sin(t * 1.4 + 0.4) * 80
-
-        const r2 = 270 + Math.sin(t * 1.7 + 2.5) * 40
-        const x2 = headX + Math.cos(t * 0.9 + 3.1) * 95
-        const y2 = headY + Math.sin(t * 1.2 + 2.6) * 85
-
-        const r3 = 240 + Math.cos(t * 2.3 + 4.0) * 30
-        const x3 = headX + Math.cos(t * 1.6 + 4.8) * 85
-        const y3 = headY + Math.sin(t * 1.5 + 4.1) * 90
-
-        const r4 = 250 + Math.sin(t * 1.9 + 5.2) * 35
-        const x4 = headX + Math.cos(t * 1.2 + 2.2) * 85
-        const y4 = headY + Math.sin(t * 1.7 + 1.8) * 80
-
-        const maskGradients: string[] = [
-          // Primary liquid nucleus
-          `radial-gradient(${r0.toFixed(0)}px circle at ${x0.toFixed(1)}px ${y0.toFixed(1)}px, rgba(0,0,0,${currentOpacity.toFixed(3)}) 0%, rgba(0,0,0,${(0.45 * currentOpacity).toFixed(3)}) 50%, transparent 100%)`,
-          // Morphing liquid bulges
-          `radial-gradient(${r1.toFixed(0)}px circle at ${x1.toFixed(1)}px ${y1.toFixed(1)}px, rgba(0,0,0,${(0.85 * currentOpacity).toFixed(3)}) 0%, rgba(0,0,0,${(0.35 * currentOpacity).toFixed(3)}) 50%, transparent 100%)`,
-          `radial-gradient(${r2.toFixed(0)}px circle at ${x2.toFixed(1)}px ${y2.toFixed(1)}px, rgba(0,0,0,${(0.85 * currentOpacity).toFixed(3)}) 0%, rgba(0,0,0,${(0.35 * currentOpacity).toFixed(3)}) 50%, transparent 100%)`,
-          `radial-gradient(${r3.toFixed(0)}px circle at ${x3.toFixed(1)}px ${y3.toFixed(1)}px, rgba(0,0,0,${(0.75 * currentOpacity).toFixed(3)}) 0%, rgba(0,0,0,${(0.3 * currentOpacity).toFixed(3)}) 50%, transparent 100%)`,
-          `radial-gradient(${r4.toFixed(0)}px circle at ${x4.toFixed(1)}px ${y4.toFixed(1)}px, rgba(0,0,0,${(0.75 * currentOpacity).toFixed(3)}) 0%, rgba(0,0,0,${(0.3 * currentOpacity).toFixed(3)}) 50%, transparent 100%)`,
-        ]
-
-        // Trailing fluid droplets with organic oscillation
-        for (let i = 0; i < trail.length; i++) {
-          const pt = trail[i]
-          const effectiveAlpha = pt.alpha * currentOpacity
-          if (effectiveAlpha > 0.02) {
-            const trX = pt.x + Math.sin(t * 2.2 + i * 1.4) * 15
-            const trY = pt.y + Math.cos(t * 1.9 + i * 1.4) * 15
-            const trR = pt.radius * (0.85 + Math.sin(t * 2.5 + i) * 0.15)
-            maskGradients.push(
-              `radial-gradient(${trR.toFixed(0)}px circle at ${trX.toFixed(1)}px ${trY.toFixed(1)}px, rgba(0,0,0,${(effectiveAlpha * 0.65).toFixed(3)}) 0%, transparent 100%)`
-            )
+            if (distance < INTERACTION_RADIUS) {
+              const influence = (1 - distance / INTERACTION_RADIUS) ** 2
+              const direction = distance > 0 ? 1 / distance : 0
+              targetX = dx * direction * MAX_DISPLACEMENT * influence
+              targetY = dy * direction * MAX_DISPLACEMENT * influence
+            }
           }
-        }
 
-        const maskString = maskGradients.join(', ')
-        revealEl.style.webkitMaskImage = maskString
-        revealEl.style.maskImage = maskString
-        revealEl.style.opacity = '1'
-      } else {
-        revealEl.style.opacity = '0'
+          point.offsetX += (targetX - point.offsetX) * 0.18
+          point.offsetY += (targetY - point.offsetY) * 0.18
+
+          const displacement = Math.hypot(point.offsetX, point.offsetY)
+          if (
+            Math.abs(targetX - point.offsetX) > 0.08 ||
+            Math.abs(targetY - point.offsetY) > 0.08
+          ) {
+            isAnimating = true
+          }
+
+          const points = displacement > 0.4 ? highlightedPoints : basePoints
+          points.push(
+            point.x + point.offsetX,
+            pointY + point.offsetY,
+            displacement > 0.4 ? 1.5 : 1.1
+          )
+        }
       }
 
-      rafId = requestAnimationFrame(render)
+      context.beginPath()
+      for (let index = 0; index < basePoints.length; index += 3) {
+        const x = basePoints[index]
+        const y = basePoints[index + 1]
+        const radius = basePoints[index + 2]
+        context.moveTo(x + radius, y)
+        context.arc(x, y, radius, 0, Math.PI * 2)
+      }
+      context.fillStyle = `rgba(${baseColor}, 0.28)`
+      context.shadowColor = `rgba(${baseColor}, 0.2)`
+      context.shadowBlur = 4
+      context.fill()
+
+      if (highlightedPoints.length > 0) {
+        context.beginPath()
+        for (let index = 0; index < highlightedPoints.length; index += 3) {
+          const x = highlightedPoints[index]
+          const y = highlightedPoints[index + 1]
+          const radius = highlightedPoints[index + 2]
+          context.moveTo(x + radius, y)
+          context.arc(x, y, radius, 0, Math.PI * 2)
+        }
+        context.fillStyle = `rgba(${accentColor}, 0.56)`
+        context.shadowColor = `rgba(${accentColor}, 0.42)`
+        context.shadowBlur = 7
+        context.fill()
+      }
+      context.shadowBlur = 0
+
+      if (!hasDrawnInitialFrame) {
+        hasDrawnInitialFrame = true
+        onReady?.()
+      }
+
+      if (isAnimating && !reducedMotion && frameDelay === null) {
+        frameDelay = window.setTimeout(() => {
+          frameDelay = null
+          scheduleDraw()
+        }, 32)
+      }
     }
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true })
-    document.addEventListener('mouseleave', handlePointerLeave)
-    document.addEventListener('mouseenter', handlePointerEnter)
+    const scheduleDraw = () => {
+      if (frameDelay !== null) {
+        window.clearTimeout(frameDelay)
+        frameDelay = null
+      }
+      if (animationFrame === null) {
+        animationFrame = window.requestAnimationFrame(draw)
+      }
+    }
 
-    rafId = requestAnimationFrame(render)
+    const resize = () => {
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5)
+      const width = window.innerWidth
+      const pageHeight = Math.max(document.documentElement.scrollHeight, window.innerHeight)
+
+      canvas.width = Math.round(width * pixelRatio)
+      canvas.height = Math.round(window.innerHeight * pixelRatio)
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+      rows = []
+
+      for (let y = GRID_SPACING / 2; y < pageHeight + GRID_SPACING; y += GRID_SPACING) {
+        const row: GridPoint[] = []
+        for (let x = GRID_SPACING / 2; x < width; x += GRID_SPACING) {
+          row.push({ x, y, offsetX: 0, offsetY: 0 })
+        }
+        rows.push(row)
+      }
+
+      scheduleDraw()
+    }
+
+    const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'touch' || reducedMotion) return
+      pointerX = event.clientX
+      pointerY = event.clientY
+      scheduleDraw()
+    }
+
+    const handlePointerOut = (event: PointerEvent) => {
+      if (event.relatedTarget !== null) return
+      pointerX = null
+      pointerY = null
+      scheduleDraw()
+    }
+
+    const themeObserver = new MutationObserver(scheduleDraw)
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+
+    const pageResizeObserver = new ResizeObserver(resize)
+    pageResizeObserver.observe(document.documentElement)
+    window.addEventListener('resize', resize)
+    window.addEventListener('scroll', scheduleDraw, { passive: true })
+    window.addEventListener('pointermove', handlePointerMove, { passive: true })
+    window.addEventListener('pointerout', handlePointerOut)
+    resize()
 
     return () => {
+      themeObserver.disconnect()
+      pageResizeObserver.disconnect()
+      window.removeEventListener('resize', resize)
+      window.removeEventListener('scroll', scheduleDraw)
       window.removeEventListener('pointermove', handlePointerMove)
-      document.removeEventListener('mouseleave', handlePointerLeave)
-      document.removeEventListener('mouseenter', handlePointerEnter)
-      if (idleTimeout) clearTimeout(idleTimeout)
-      cancelAnimationFrame(rafId)
+      window.removeEventListener('pointerout', handlePointerOut)
+      if (frameDelay !== null) window.clearTimeout(frameDelay)
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame)
     }
-  }, [])
+  }, [onReady])
 
   return (
-    <div
-      ref={containerRef}
+    <canvas
+      ref={canvasRef}
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden w-full h-full"
-    >
-      {/* Pure liquid reveal grid: undulating organic fluid mask, no colored lamp glow */}
-      <div
-        ref={revealGridRef}
-        className="absolute inset-0 bg-grid-reveal pointer-events-none opacity-0 transition-opacity duration-300"
-      />
-    </div>
+      className="fixed inset-0 z-0 h-full w-full pointer-events-none dot-grid-canvas"
+    />
   )
 }

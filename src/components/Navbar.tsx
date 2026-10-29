@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { Lightbulb, Menu, X } from 'lucide-react'
 import { useLenis } from '../context/LenisContext'
@@ -30,33 +30,32 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
     setMobileMenuOpen(false)
   }
 
-  useLayoutEffect(() => {
+  const positionIndicator = useCallback((animate: boolean) => {
     const nav = navRef.current
     const indicator = activeIndicatorRef.current
     const activeButton = nav?.querySelector<HTMLButtonElement>(`[data-nav-id="${activeSection}"]`)
     if (!nav || !indicator || !activeButton || nav.clientWidth === 0) return
 
-    const navRect = nav.getBoundingClientRect()
-    const buttonRect = activeButton.getBoundingClientRect()
-    const indicatorWidth = Math.round(buttonRect.width)
-    const indicatorHeight = Math.round(buttonRect.height)
     const position = {
-      left: buttonRect.left - navRect.left - nav.clientLeft,
-      top: buttonRect.top - navRect.top - nav.clientTop,
-      width: indicatorWidth,
-      height: indicatorHeight,
+      x: activeButton.offsetLeft,
+      y: activeButton.offsetTop,
+      width: activeButton.offsetWidth,
+      height: activeButton.offsetHeight,
     }
 
     if (!hasPositionedIndicator.current) {
-      gsap.set(indicator, position)
+      gsap.set(indicator, { ...position, autoAlpha: 1 })
       hasPositionedIndicator.current = true
-    } else {
+    } else if (animate) {
       gsap.to(indicator, {
         ...position,
-        duration: 0.32,
-        ease: 'power2.out',
+        autoAlpha: 1,
+        duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 0.75,
+        ease: 'power2.inOut',
         overwrite: 'auto',
       })
+    } else {
+      gsap.set(indicator, { ...position, autoAlpha: 1 })
     }
   }, [activeSection])
 
@@ -64,46 +63,43 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
     const nav = navRef.current
     if (!nav) return
 
-    const updateIndicator = () => {
-      const activeButton = nav.querySelector<HTMLButtonElement>(`[data-nav-id="${activeSection}"]`)
-      const indicator = activeIndicatorRef.current
-      if (!activeButton || !indicator || nav.clientWidth === 0) return
+    const handleResize = () => positionIndicator(false)
+    positionIndicator(true)
 
-      const navRect = nav.getBoundingClientRect()
-      const buttonRect = activeButton.getBoundingClientRect()
-      const indicatorWidth = Math.round(buttonRect.width)
-      const indicatorHeight = Math.round(buttonRect.height)
-      gsap.set(indicator, {
-        left: buttonRect.left - navRect.left - nav.clientLeft,
-        top: buttonRect.top - navRect.top - nav.clientTop,
-        width: indicatorWidth,
-        height: indicatorHeight,
-      })
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
     }
+  }, [activeSection, positionIndicator])
 
-    window.addEventListener('resize', updateIndicator)
-    return () => window.removeEventListener('resize', updateIndicator)
-  }, [activeSection])
+  useEffect(() => () => {
+    gsap.killTweensOf(activeIndicatorRef.current)
+  }, [])
 
   return (
     <header
-      className={`fixed top-2 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-40 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         isScrolled
-          ? 'py-3.5'
-          : 'bg-transparent py-5'
+          ? 'top-7 py-2'
+          : 'top-8 bg-transparent py-5'
       }`}
     >
       <div className="content-container relative flex items-center justify-between">
         {/* Desktop Nav Items */}
-        <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
+        <div
+          className={`hidden md:flex absolute left-1/2 -translate-x-1/2 origin-top transform-gpu items-center gap-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            isScrolled ? 'scale-[0.96]' : 'scale-100'
+          }`}
+        >
           <nav
             ref={navRef}
-            className="navbar-glass relative flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5 backdrop-blur-md"
+            className="navbar-glass relative flex w-max items-center gap-1 rounded-full bg-zinc-900/60 border border-white/5 p-1.5 backdrop-blur-md"
           >
             <span
               ref={activeIndicatorRef}
               aria-hidden="true"
-              className="absolute left-0 top-0 rounded-full bg-blue-500/15 border border-blue-400/20 pointer-events-none"
+              className="invisible absolute left-0 top-0 rounded-full bg-blue-500/15 border border-blue-400/20 pointer-events-none will-change-[transform,width,height]"
             />
             {navItems.map((item) => {
               const isActive = activeSection === item.id
@@ -112,7 +108,7 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
                   key={item.id}
                   data-nav-id={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 ${
+                  className={`relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive
                       ? 'text-blue-300'
                       : 'text-zinc-400 hover:text-white'
@@ -125,12 +121,12 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
           </nav>
           <button
             onClick={onToggleTheme}
-            className="navbar-glass absolute left-full top-1/2 ml-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-zinc-900/60 text-amber-400 backdrop-blur-md transition-colors hover:bg-zinc-800 border border-white/5"
+            className="navbar-glass flex h-11 w-11 items-center justify-center rounded-full bg-zinc-900/60 text-amber-400 backdrop-blur-md transition-colors hover:bg-zinc-800 border border-white/5"
             title={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-label={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-pressed={theme === 'light'}
           >
-            <Lightbulb className="w-4 h-4" />
+            <Lightbulb className="h-5 w-5" />
           </button>
         </div>
 
@@ -138,16 +134,20 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={onToggleTheme}
-            className="navbar-glass w-10 h-10 rounded-full bg-zinc-900/60 border border-white/5 text-amber-400 backdrop-blur-md focus:outline-none flex items-center justify-center"
+            className={`navbar-glass rounded-full bg-zinc-900/60 border border-white/5 text-amber-400 backdrop-blur-md focus:outline-none flex items-center justify-center transition-all duration-300 ${
+              isScrolled ? 'h-10 w-10' : 'h-12 w-12'
+            }`}
             title={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-label={`Aktifkan tema ${theme === 'dark' ? 'terang' : 'gelap'}`}
             aria-pressed={theme === 'light'}
           >
-            <Lightbulb className="w-5 h-5" />
+            <Lightbulb className={isScrolled ? 'h-5 w-5' : 'h-6 w-6'} />
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="navbar-glass p-2 rounded-lg bg-zinc-900/80 border border-white/10 text-zinc-300 hover:text-white focus:outline-none"
+            className={`navbar-glass rounded-lg bg-zinc-900/80 border border-white/10 text-zinc-300 hover:text-white focus:outline-none transition-all duration-300 ${
+              isScrolled ? 'p-2' : 'p-2.5'
+            }`}
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
